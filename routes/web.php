@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmailVerificationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
@@ -22,6 +23,20 @@ Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])
     ->name('google.callback');
 
 
+ // Route verifikasi email - satu set saja
+Route::get('/verify/code', function () {
+    $email = request()->query('email', session('email'));
+    return Inertia::render('auth/verify-code', [
+        'email' => $email,
+        'status' => session('status')
+    ]);
+})->name('verify.code');
+
+Route::post('/verify/code', [EmailVerificationController::class, 'verify'])
+    ->name('verify.code.submit');
+
+Route::post('/verify/code/resend', [EmailVerificationController::class, 'resend'])
+    ->name('verify.code.resend');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');

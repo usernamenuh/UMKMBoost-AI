@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Http\Request;
 
 class GoogleAuthController extends Controller
 {
@@ -46,6 +47,7 @@ class GoogleAuthController extends Controller
                 'google_id' => $googleUser->getId(),
                 'password' => bcrypt(Str::random(32)),
                 'email_verified_at' => now(), // Auto verify untuk Google users
+                'email_verification_code' => null,
             ]);
 
             Auth::login($user);

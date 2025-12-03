@@ -4,8 +4,11 @@ namespace App\Actions\Fortify;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use App\Mail\VerifyEmailCodeMail;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -30,10 +33,20 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        return User::create([
+        // Generate OTP hanya sekali
+        $code = rand(100000, 999999);
+
+        // Create user dengan kode verifikasi
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
-            'password' => $input['password'],
+            'password' => Hash::make($input['password']),
+            'email_verification_code' => $code, // Set langsung saat create
         ]);
+        
+        // Kirim email OTP menggunakan Mailable class
+        Mail::to($user->email)->send(new VerifyEmailCodeMail($code));
+        
+        return $user;
     }
 }

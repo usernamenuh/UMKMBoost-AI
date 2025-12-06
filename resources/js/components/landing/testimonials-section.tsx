@@ -39,42 +39,42 @@ const umkmTestimonials = [
     name: "Freya",
     business: 'Pemilik Toko Kue "Freya Bakery"',
     quote:
-      "Dulu saya kesulitan bikin poster promo yang menarik. Sekarang cukup upload foto kue, aplikasinya langsung buat poster cantik dan caption Instagram yang siap posting. Engagement naik 3×!",
+      "Dulu saya bingung hitung untung rugi. Sekarang FinSight otomatis kasih tahu berapa keuntungan harian dan kapan modal balik. Bisnis jadi lebih terencana!",
     avatar: "/assets/freya.jpeg",
   },
   {
     name: "Anindya",
     business: 'UMKM Fashion "Anindya Style"',
     quote:
-      "Fitur perbaikan foto produknya luar biasa. Foto baju saya yang tadinya gelap jadi terlihat profesional. Penjualan naik karena pelanggan bilang gambarnya lebih meyakinkan.",
+      "Fitur prediksi BEP-nya luar biasa. Saya jadi tahu berapa baju yang harus dijual biar balik modal. Sekarang target penjualan lebih jelas.",
     avatar: "/assets/Anindya.jpeg",
   },
   {
     name: "Ella",
     business: 'Pemilik Coffee Shop "Kopi Kita"',
     quote:
-      "Poster promo mingguan jadi jauh lebih rapi dan trendy. Saya tinggal upload foto kopi, klik generate, dan langsung dapat desain yang cocok dengan brand saya. membuat saya senang",
+      "Laporan keuangan otomatisnya sangat membantu. Grafik pertumbuhan profit jelas, jadi saya bisa ambil keputusan lebih cepat dan tepat.",
     avatar: "/assets/Ella.jpeg",
   },
   {
     name: "Shani",
     business: 'Pemilik "Shani Handmade Craft"',
     quote:
-      "Saya tidak punya waktu untuk membuat konten setiap hari. Aplikasi ini bantu saya generate ide konten dan jadwal posting otomatis. Sangat hemat waktu!",
+      "AI Advisor-nya keren banget! Saya tanya 'harga jual ideal berapa?' langsung dijawab dengan perhitungan yang masuk akal. Sangat membantu!",
     avatar: "/assets/shani.jpeg",
   },
   {
     name: "Greesel",
     business: 'Online Shop "Greesel Beauty"',
     quote:
-      "Deskripsi produk otomatisnya benar-benar membantu. Tidak perlu pusing bikin wording panjang. Hasilnya selalu profesional dan jelas.",
+      "Tracking modal dan pengeluaran jadi rapi. Dulu saya catat manual dan sering salah. Sekarang semua tercatat otomatis dan akurat.",
     avatar: "/assets/Gresel.jpeg",
   },
   {
     name: "Indah",
     business: 'Pemilik "Indah Electronics"',
     quote:
-      "Aplikasi ini sangat membantu untuk membuat konten promosi gadget. Foto produk jadi lebih menarik dan deskripsi teknis jadi mudah dipahami pelanggan.",
+      "Insight otomatisnya sangat berguna. FinSight kasih tahu kalau pengeluaran operasional tinggi dan saran untuk optimasi. Hemat biaya 20%!",
     avatar: "/assets/indah.jpeg",
   },
 ]
@@ -87,8 +87,10 @@ export function TestimonialsSection() {
           <span className="inline-block px-4 py-1.5 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">
             Kisah Sukses
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Kisah Sukses UMKM</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">Tingkatkan penjualan, raih lebih banyak keuntungan!</p>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">UMKM yang Sudah Terbantu</h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Kelola keuangan lebih pintar, raih keuntungan lebih besar!
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
@@ -133,7 +135,7 @@ export function TestimonialsSection() {
 
         <div className="text-center mb-16">
           <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Hasil Nyata dari Pelaku UMKM</h3>
-          <p className="text-gray-600">Lihat bagaimana aplikasi kami membantu bisnis mereka berkembang</p>
+          <p className="text-gray-600">Lihat bagaimana FinSight membantu bisnis mereka berkembang</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 lg:gap-40 max-w-5xl mx-auto px-12">
@@ -152,7 +154,7 @@ export function TestimonialsSection() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="absolute -top-10 -left-8 bg-white rounded-xl p-4 shadow-lg z-10"
               >
-                <p className="text-xs text-gray-500 mb-1">Peningkatan Penjualan</p>
+                <p className="text-xs text-gray-500 mb-1">Peningkatan Profit</p>
                 <div className="flex items-center gap-3">
                   <p className="text-2xl font-bold text-gray-900">+85%</p>
                   <MiniLineChart />
@@ -208,7 +210,7 @@ export function TestimonialsSection() {
                 transition={{ duration: 0.5, delay: 0.4 }}
                 className="absolute -bottom-8 right-4 bg-white rounded-xl p-4 shadow-lg z-10"
               >
-                <p className="text-xs text-gray-500 mb-1">Pendapatan</p>
+                <p className="text-xs text-gray-500 mb-1">Keuntungan Bersih</p>
                 <div className="flex items-center gap-2">
                   <p className="text-xl font-bold text-gray-900">Rp4.2jt</p>
                   <motion.div
@@ -262,7 +264,7 @@ export function TestimonialsSection() {
               >
                 <div className="flex items-center gap-2 mb-1">
                   <FaUsers className="w-4 h-4 text-blue-500" />
-                  <p className="text-xs text-gray-500">Total Pelanggan</p>
+                  <p className="text-xs text-gray-500">Balik Modal</p>
                 </div>
                 <motion.p
                   className="text-2xl font-bold text-gray-900"
@@ -270,7 +272,7 @@ export function TestimonialsSection() {
                   whileInView={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.5 }}
                 >
-                  2,847
+                  17 Hari
                 </motion.p>
               </motion.div>
 
@@ -324,10 +326,10 @@ export function TestimonialsSection() {
                 transition={{ duration: 0.5, delay: 0.4 }}
                 className="absolute bottom-24 -left-16 bg-white rounded-xl p-4 shadow-lg z-10"
               >
-                <p className="text-xs text-gray-500 mb-1">Follower Baru</p>
+                <p className="text-xs text-gray-500 mb-1">Margin Profit</p>
                 <div className="flex items-center gap-2">
                   <FaHandPeace className="w-5 h-5 text-yellow-500" />
-                  <p className="text-xl font-bold text-gray-900">1,250</p>
+                  <p className="text-xl font-bold text-gray-900">35%</p>
                 </div>
               </motion.div>
 
@@ -340,7 +342,7 @@ export function TestimonialsSection() {
               >
                 <div className="flex items-center gap-2 mb-1">
                   <FaShoppingCart className="w-4 h-4 text-green-500" />
-                  <p className="text-xs text-gray-500">Total Pesanan</p>
+                  <p className="text-xs text-gray-500">Total Transaksi</p>
                 </div>
                 <motion.p
                   className="text-2xl font-bold text-gray-900"

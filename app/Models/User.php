@@ -25,6 +25,7 @@ class User extends Authenticatable
         'password_reset_code',
         'password_reset_code_expires_at'
     ];
+    
 
     protected $hidden = [
         'password',
@@ -124,5 +125,9 @@ class User extends Authenticatable
             'password_reset_code' => null,
             'password_reset_code_expires_at' => null,
         ]);
+    }
+    public function businesses()
+    {
+        return $this->hasMany(Business::class);
     }
 }

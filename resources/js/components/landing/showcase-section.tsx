@@ -1,38 +1,46 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { IconArrowRight, IconSparkles } from "@tabler/icons-react"
+import { IconArrowRight, IconSparkles, IconChartBar, IconTrendingUp, IconReportMoney } from "@tabler/icons-react"
 
 export function ShowcaseSection() {
   const showcaseItems = [
     {
-      type: "before-after",
-      title: "Photo Enhancement",
-      description: "Tingkatkan kualitas foto produk secara otomatis",
-      before: "/assets/snack.jpg",
-      after: "/assets/snak.jpg",
+      type: "insight",
+      title: "AI Insight Otomatis",
+      description: "FinSight memberikan insight keuangan secara real-time",
+      insights: [
+        { text: "Keuntungan minggu ini naik 12% 🎉", type: "success" },
+        { text: "Modal diprediksi kembali dalam 17 hari", type: "info" },
+        { text: "Pengeluaran operasional tinggi, pertimbangkan optimasi", type: "warning" },
+      ],
     },
     {
-      type: "before-after",
-      title: "Background Removal",
-      description: "Hapus background dan ganti dengan latar profesional",
-      before: "/assets/seblak.jpeg",
-      after: "/assets/seblakr.png",
+      type: "advisor",
+      title: "AI Advisor untuk UMKM",
+      description: "Tanyakan apa saja tentang keuangan bisnis kamu",
+      questions: ["Harga jual ideal berapa ya?", "Modal saya aman nggak?", "Cara ningkatin profit?"],
     },
   ]
 
-  const generatedPosters = [
+  const financialReports = [
     {
-      title: "Poster Promo Lebaran",
-      image: "/assets/poste.jpg",
+      title: "Laporan Keuntungan Harian",
+      icon: IconChartBar,
+      value: "Rp 850.000",
+      change: "+15%",
     },
     {
-      title: "Flash Sale Banner",
-      image: "/assets/flash.jpg",
+      title: "Margin Profit",
+      icon: IconTrendingUp,
+      value: "35%",
+      change: "+5%",
     },
     {
-      title: "New Product Launch",
-      image: "/assets/new.jpg",
+      title: "Prediksi BEP",
+      icon: IconReportMoney,
+      value: "17 Hari",
+      change: "-3 hari",
     },
   ]
 
@@ -61,7 +69,7 @@ export function ShowcaseSection() {
             x: [0, 15, 0],
           }}
           transition={{ duration: 12, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 2 }}
-          className="absolute top-1/2 left-1/3 w-64 h-64 bg-purple-100/20 rounded-full blur-3xl"
+          className="absolute top-1/2 left-1/3 w-64 h-64 bg-green-100/20 rounded-full blur-3xl"
         />
       </div>
 
@@ -81,17 +89,17 @@ export function ShowcaseSection() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700 text-sm font-medium mb-4 border border-blue-200/50"
           >
             <IconSparkles className="w-4 h-4" />
-            Hasil Nyata
+            Fitur Utama FinSight
           </motion.span>
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 text-balance">
-            Lihat Transformasi yang Menakjubkan
+            Insight Keuangan yang Powerful
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Bandingkan hasil sebelum dan sesudah menggunakan AI tools kami
+            Lihat bagaimana FinSight membantu kamu mengambil keputusan bisnis lebih pintar
           </p>
         </motion.div>
 
-        {/* Before-After Comparisons */}
+        {/* AI Insights & Advisor */}
         <div className="mb-20">
           <motion.h3
             initial={{ opacity: 0 }}
@@ -100,7 +108,7 @@ export function ShowcaseSection() {
             viewport={{ once: true }}
             className="text-xl font-semibold text-gray-900 mb-8 text-center"
           >
-            Before & After Photo Enhancement
+            Insight Otomatis & AI Advisor
           </motion.h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {showcaseItems.map((item, idx) => (
@@ -113,49 +121,58 @@ export function ShowcaseSection() {
                 whileHover={{ y: -5, transition: { duration: 0.3 } }}
                 className="bg-white rounded-2xl p-6 border border-gray-100 shadow-lg shadow-gray-100/50 hover:shadow-xl hover:shadow-blue-100/50 transition-shadow duration-300"
               >
-                <div className="flex gap-4 mb-4">
-                  <div className="flex-1">
-                    <div className="relative group">
-                      <span className="absolute top-2 left-2 z-10 bg-gray-800/90 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-full font-medium">
-                        Before
-                      </span>
-                      <img
-                        src={item.before || "/placeholder.svg"}
-                        alt={`Before ${item.title}`}
-                        className="w-full aspect-square object-cover rounded-xl ring-1 ring-gray-200"
-                      />
-                    </div>
+                {item.type === "insight" ? (
+                  <div className="space-y-3">
+                    {item.insights?.map((insight, i) => (
+                      <div
+                        key={i}
+                        className={`flex items-start gap-3 p-3 rounded-xl ${
+                          insight.type === "success"
+                            ? "bg-green-50 border border-green-100"
+                            : insight.type === "warning"
+                              ? "bg-orange-50 border border-orange-100"
+                              : "bg-blue-50 border border-blue-100"
+                        }`}
+                      >
+                        <IconSparkles
+                          className={`w-5 h-5 mt-0.5 ${
+                            insight.type === "success"
+                              ? "text-green-600"
+                              : insight.type === "warning"
+                                ? "text-orange-600"
+                                : "text-blue-600"
+                          }`}
+                        />
+                        <p className="text-sm text-gray-700">{insight.text}</p>
+                      </div>
+                    ))}
                   </div>
-                  <div className="flex items-center">
-                    <motion.div
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                      className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/30"
-                    >
-                      <IconArrowRight className="w-5 h-5 text-white" />
-                    </motion.div>
+                ) : (
+                  <div className="space-y-3">
+                    {item.questions?.map((question, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 border border-gray-100 hover:bg-blue-50 hover:border-blue-100 transition-colors cursor-pointer"
+                      >
+                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                          <span className="text-blue-600 text-sm font-medium">?</span>
+                        </div>
+                        <p className="text-sm text-gray-700">"{question}"</p>
+                        <IconArrowRight className="w-4 h-4 text-gray-400 ml-auto" />
+                      </div>
+                    ))}
                   </div>
-                  <div className="flex-1">
-                    <div className="relative group">
-                      <span className="absolute top-2 left-2 z-10 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs px-2.5 py-1 rounded-full font-medium">
-                        After
-                      </span>
-                      <img
-                        src={item.after || "/placeholder.svg"}
-                        alt={`After ${item.title}`}
-                        className="w-full aspect-square object-cover rounded-xl ring-1 ring-blue-200"
-                      />
-                    </div>
-                  </div>
+                )}
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
+                  <p className="text-sm text-gray-600">{item.description}</p>
                 </div>
-                <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
-                <p className="text-sm text-gray-600">{item.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* AI Generated Posters */}
+        {/* Financial Reports */}
         <div>
           <motion.h3
             initial={{ opacity: 0 }}
@@ -164,10 +181,10 @@ export function ShowcaseSection() {
             viewport={{ once: true }}
             className="text-xl font-semibold text-gray-900 mb-8 text-center"
           >
-            AI-Generated Posters
+            Laporan Keuangan Otomatis
           </motion.h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {generatedPosters.map((poster, idx) => (
+            {financialReports.map((report, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, y: 30 }}
@@ -177,23 +194,21 @@ export function ShowcaseSection() {
                 whileHover={{ y: -8, transition: { duration: 0.3 } }}
                 className="group relative"
               >
-                <div className="relative overflow-hidden rounded-2xl border border-gray-100 shadow-lg shadow-gray-100/50 group-hover:shadow-xl group-hover:shadow-blue-100/50 transition-all duration-300">
-                  <img
-                    src={poster.image || "/placeholder.svg"}
-                    alt={poster.title}
-                    className="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                    <p className="text-white font-medium">{poster.title}</p>
-                    <p className="text-white/70 text-sm flex items-center gap-1">
-                      <IconSparkles className="w-3 h-3" />
-                      Generated by AI
-                    </p>
+                <div className="relative overflow-hidden rounded-2xl border border-gray-100 shadow-lg shadow-gray-100/50 group-hover:shadow-xl group-hover:shadow-blue-100/50 transition-all duration-300 bg-white p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center group-hover:bg-blue-600 transition-colors">
+                      <report.icon className="w-6 h-6 text-blue-600 group-hover:text-white transition-colors" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">{report.title}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="mt-3 text-center">
-                  <p className="font-medium text-gray-900">{poster.title}</p>
+                  <div className="flex items-end justify-between">
+                    <p className="text-3xl font-bold text-gray-900">{report.value}</p>
+                    <span className="text-sm font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                      {report.change}
+                    </span>
+                  </div>
                 </div>
               </motion.div>
             ))}

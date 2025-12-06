@@ -10,16 +10,16 @@ import {
   IconSparkles,
   IconCheck,
   IconRocket,
-  IconPhoto,
-  IconMessage,
+  IconChartBar,
+  IconCoin,
   IconBolt,
-  IconPalette,
-  IconWand,
+  IconCalculator,
   IconTrendingUp,
+  IconReportMoney,
 } from "@tabler/icons-react"
 
 export function HeroSection() {
-  const words = ["Profesional", "Berkualitas", "Menarik", "Modern"]
+  const words = ["Lebih Pintar", "Lebih Cepat", "Lebih Jelas", "Lebih Aman"]
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export function HeroSection() {
               className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-full px-4 py-2 mb-8"
             >
               <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-              <span className="text-sm font-medium text-blue-700">Platform AI untuk UMKM Indonesia</span>
+              <span className="text-sm font-medium text-blue-700">Financial Insight for Smarter UMKM Decisions</span>
             </motion.div>
 
             <motion.h1
@@ -59,7 +59,7 @@ export function HeroSection() {
               transition={{ delay: 0.1 }}
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6"
             >
-              Buat Konten{" "}
+              Kelola Keuangan{" "}
               <span className="relative inline-block h-[1.15em] overflow-hidden align-bottom">
                 <AnimatePresence mode="popLayout">
                   <motion.span
@@ -84,8 +84,8 @@ export function HeroSection() {
               transition={{ delay: 0.2 }}
               className="text-lg text-gray-600 max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed"
             >
-              Buat poster promosi, tingkatkan kualitas foto produk, dan hasilkan caption menarik secara instan dengan
-              teknologi AI.
+              FinSight membantu kamu memahami alur modal, menghitung keuntungan, dan memprediksi kapan modal akan
+              kembali. Dengan dukungan AI yang ringan dan gratis.
             </motion.p>
 
             <motion.div
@@ -114,7 +114,7 @@ export function HeroSection() {
               transition={{ delay: 0.4 }}
               className="flex flex-wrap gap-6 justify-center lg:justify-start text-sm text-gray-600"
             >
-              {["Tanpa Kartu Kredit", "Setup 2 Menit", "Bahasa Indonesia"].map((text) => (
+              {["Tanpa Kartu Kredit", "AI Insight Gratis", "Bahasa Indonesia"].map((text) => (
                 <div key={text} className="flex items-center gap-2">
                   <IconCheck className="w-4 h-4 text-blue-600" />
                   <span>{text}</span>
@@ -144,8 +144,8 @@ export function HeroSection() {
                   <IconBolt className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">Auto Generate</p>
-                  <p className="text-xs text-gray-500">Instant results</p>
+                  <p className="text-sm font-semibold text-gray-900">Auto Insight</p>
+                  <p className="text-xs text-gray-500">Analisis otomatis</p>
                 </div>
               </div>
             </motion.div>
@@ -156,15 +156,15 @@ export function HeroSection() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.0, type: "spring", stiffness: 150 }}
               whileHover={{ scale: 1.05, x: 5 }}
-              className="absolute top-1/3 -right-20 hidden lg:flex bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl shadow-lg p-4 border border-purple-100 cursor-pointer z-20"
+              className="absolute top-1/3 -right-20 hidden lg:flex bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-lg p-4 border border-green-100 cursor-pointer z-20"
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-violet-500 rounded-xl flex items-center justify-center shadow-md">
-                  <IconPalette className="w-5 h-5 text-white" />
+                <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center shadow-md">
+                  <IconCalculator className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">100+ Template</p>
-                  <p className="text-xs text-gray-500">Ready to use</p>
+                  <p className="text-sm font-semibold text-gray-900">Hitung BEP</p>
+                  <p className="text-xs text-gray-500">Prediksi balik modal</p>
                 </div>
               </div>
             </motion.div>
@@ -179,11 +179,11 @@ export function HeroSection() {
             >
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-gradient-to-br from-teal-400 to-emerald-500 rounded-xl flex items-center justify-center shadow-md">
-                  <IconWand className="w-5 h-5 text-white" />
+                  <IconReportMoney className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">Smart Edit</p>
-                  <p className="text-xs text-gray-500">One click fix</p>
+                  <p className="text-sm font-semibold text-gray-900">Laporan Otomatis</p>
+                  <p className="text-xs text-gray-500">Grafik & ringkasan</p>
                 </div>
               </div>
             </motion.div>
@@ -201,8 +201,8 @@ export function HeroSection() {
                   <IconTrendingUp className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">Boost Sales</p>
-                  <p className="text-xs text-gray-500">+40% engagement</p>
+                  <p className="text-sm font-semibold text-gray-900">Monitor Profit</p>
+                  <p className="text-xs text-gray-500">Pantau keuntungan</p>
                 </div>
               </div>
             </motion.div>
@@ -217,7 +217,7 @@ export function HeroSection() {
                 </div>
                 <div className="flex-1 mx-4">
                   <div className="bg-white rounded-lg px-4 py-1.5 text-xs text-gray-500 text-center border">
-                    umkmboost.ai/dashboard
+                    finsight.id/dashboard
                   </div>
                 </div>
               </div>
@@ -230,24 +230,24 @@ export function HeroSection() {
                     whileTap={{ scale: 0.95 }}
                     className="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 cursor-pointer"
                   >
+                    <IconChartBar className="w-3.5 h-3.5" />
+                    Dashboard
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.05, backgroundColor: "#e5e7eb" }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 cursor-pointer transition-colors"
+                  >
+                    <IconCoin className="w-3.5 h-3.5" />
+                    Tracking Modal
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.05, backgroundColor: "#e5e7eb" }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 cursor-pointer transition-colors"
+                  >
                     <IconSparkles className="w-3.5 h-3.5" />
-                    AI Poster
-                  </motion.div>
-                  <motion.div
-                    whileHover={{ scale: 1.05, backgroundColor: "#e5e7eb" }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 cursor-pointer transition-colors"
-                  >
-                    <IconPhoto className="w-3.5 h-3.5" />
-                    Photo Enhancer
-                  </motion.div>
-                  <motion.div
-                    whileHover={{ scale: 1.05, backgroundColor: "#e5e7eb" }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 cursor-pointer transition-colors"
-                  >
-                    <IconMessage className="w-3.5 h-3.5" />
-                    Caption
+                    AI Advisor
                   </motion.div>
                 </div>
 
@@ -256,37 +256,21 @@ export function HeroSection() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.5 }}
-                    className="relative rounded-xl overflow-hidden group"
+                    className="relative rounded-xl overflow-hidden bg-gradient-to-br from-green-50 to-emerald-100 p-4 border border-green-200"
                   >
-                    <div className="absolute top-2 left-2 bg-gray-900/80 text-white text-xs px-2 py-1 rounded-md z-10">
-                      Before
-                    </div>
-                    <img
-                      src="/assets/before.png"
-                      alt="Before"
-                      className="w-full h-44 object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
+                    <p className="text-xs text-green-600 mb-1">Keuntungan Bulan Ini</p>
+                    <p className="text-2xl font-bold text-green-700">Rp 4.2jt</p>
+                    <p className="text-xs text-green-500 mt-1">+12% dari bulan lalu</p>
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.6 }}
-                    className="relative rounded-xl overflow-hidden group"
+                    className="relative rounded-xl overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-100 p-4 border border-blue-200"
                   >
-                    <motion.div
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.8 }}
-                      className="absolute top-2 left-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-md flex items-center gap-1 z-10"
-                    >
-                      <IconSparkles className="w-3 h-3" />
-                      AI Enhanced
-                    </motion.div>
-                    <img
-                      src="/assets/after.png"
-                      alt="After"
-                      className="w-full h-44 object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
+                    <p className="text-xs text-blue-600 mb-1">Prediksi Balik Modal</p>
+                    <p className="text-2xl font-bold text-blue-700">17 Hari</p>
+                    <p className="text-xs text-blue-500 mt-1">Berdasarkan tren penjualan</p>
                   </motion.div>
                 </div>
 
@@ -297,11 +281,12 @@ export function HeroSection() {
                   className="mt-4 bg-gray-50 rounded-xl p-4 border"
                 >
                   <div className="flex items-center gap-1.5 mb-1.5">
-                    <IconMessage className="w-3.5 h-3.5 text-gray-400" />
-                    <p className="text-xs text-gray-500">Generated Caption</p>
+                    <IconSparkles className="w-3.5 h-3.5 text-blue-500" />
+                    <p className="text-xs text-gray-500">AI Insight</p>
                   </div>
                   <p className="text-sm text-gray-700">
-                    "Nikmati kelezatan autentik yang bikin nagih! Dibuat dengan bahan pilihan berkualitas."
+                    "Keuntungan minggu ini naik 12% 🎉 Modal diprediksi kembali dalam 17 hari. Pertahankan momentum
+                    penjualan!"
                   </p>
                 </motion.div>
               </div>
@@ -321,7 +306,7 @@ export function HeroSection() {
                 </div>
                 <div>
                   <p className="text-sm font-bold text-gray-900">1000+ UMKM</p>
-                  <p className="text-xs text-gray-500">Already using</p>
+                  <p className="text-xs text-gray-500">Sudah menggunakan</p>
                 </div>
               </div>
             </motion.div>

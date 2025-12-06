@@ -18,10 +18,11 @@ import { HowItWorksSection } from "./how-it-works-section"
 import { ShowcaseSection } from "./showcase-section"
 import { TestimonialsSection } from "./testimonials-section"
 import { PricingSection } from "./pricing-section"
-import { CTASection } from "./cta-section"
 import { Footer } from "./footer"
-import { dashboard, login, register } from '@/routes';
-import { Link, usePage } from "@inertiajs/react"
+import { CTASection } from "./cta-section"
+import { login, register } from '@/routes';
+import { Link } from "@inertiajs/react"
+
 
 const navItems = [
   { name: "Fitur", link: "#features" },
@@ -29,6 +30,7 @@ const navItems = [
   { name: "Showcase", link: "#showcase" },
   { name: "Testimoni", link: "#testimonials" },
 ]
+
 export function Landing() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
@@ -39,10 +41,8 @@ export function Landing() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="secondary">
-              <Link href={login()}>Log in</Link>
-            </NavbarButton>
-            <NavbarButton className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl"><Link href={register()}>Register</Link></NavbarButton>
+            <NavbarButton variant="secondary">Log in</NavbarButton>
+            <NavbarButton className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl">Register</NavbarButton>
           </div>
         </NavBody>
 
@@ -63,7 +63,7 @@ export function Landing() {
               </a>
             ))}
             <div className="flex w-full flex-col gap-4">
-              <NavbarButton variant="secondary">
+               <NavbarButton variant="secondary">
               <Link href={login()}>Log in</Link>
             </NavbarButton>
             <NavbarButton className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl"><Link href={register()}>Register</Link></NavbarButton>

@@ -1,49 +1,49 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { IconUpload, IconSparkles, IconDownload, IconPhoto, IconCheck } from "@tabler/icons-react"
+import { IconCoin, IconSparkles, IconChartBar, IconCheck } from "@tabler/icons-react"
 
 export function HowItWorksSection() {
   const steps = [
     {
-      icon: IconUpload,
-      title: "Upload Foto Produk",
-      description: "Unggah foto produk Anda dalam format apapun",
+      icon: IconCoin,
+      title: "Catat Modal & Pengeluaran",
+      description: "Input modal awal dan biaya operasional bisnis kamu",
       content: (
         <div className="space-y-2">
           <div className="flex items-center gap-3 bg-white rounded-lg px-3 py-2 border">
-            <IconPhoto className="w-4 h-4 text-blue-600" />
-            <span className="text-sm text-gray-700 flex-1">product-photo.jpg</span>
-            <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded">Ready</span>
+            <IconCoin className="w-4 h-4 text-blue-600" />
+            <span className="text-sm text-gray-700 flex-1">Modal Awal</span>
+            <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded">Rp 5.000.000</span>
           </div>
           <div className="flex items-center gap-3 bg-white rounded-lg px-3 py-2 border">
-            <IconPhoto className="w-4 h-4 text-blue-600" />
-            <span className="text-sm text-gray-700 flex-1">banner.png</span>
-            <span className="text-xs text-yellow-600 bg-yellow-50 px-2 py-0.5 rounded">Uploading</span>
+            <IconCoin className="w-4 h-4 text-orange-600" />
+            <span className="text-sm text-gray-700 flex-1">Biaya Bahan</span>
+            <span className="text-xs text-orange-600 bg-orange-50 px-2 py-0.5 rounded">Rp 2.000.000</span>
           </div>
           <div className="flex items-center gap-3 bg-gray-50 rounded-lg px-3 py-2 border border-dashed opacity-60">
-            <IconUpload className="w-4 h-4 text-gray-400" />
-            <span className="text-sm text-gray-400">Drop files here...</span>
+            <IconCoin className="w-4 h-4 text-gray-400" />
+            <span className="text-sm text-gray-400">Tambah pengeluaran...</span>
           </div>
         </div>
       ),
     },
     {
       icon: IconSparkles,
-      title: "Pilih Tools AI",
-      description: "Pilih tools AI yang sesuai kebutuhan Anda",
+      title: "AI Analisis Otomatis",
+      description: "FinSight menghitung profit dan prediksi BEP",
       content: (
         <div className="space-y-2">
-          {["Poster Generator", "Photo Enhancer", "Caption Generator"].map((tool, i) => (
+          {["Hitung Margin Profit", "Prediksi Balik Modal", "Analisis Tren"].map((tool, i) => (
             <div key={i} className="flex items-center gap-2 bg-white rounded-lg px-3 py-2 border">
               <IconCheck className="w-4 h-4 text-green-600" />
               <span className="text-sm text-gray-700 flex-1">{tool}</span>
-              <span className="text-xs text-gray-400">{[10, 20, 5][i]}s</span>
+              <span className="text-xs text-gray-400">{["✓", "✓", "✓"][i]}</span>
             </div>
           ))}
           <motion.div className="h-1.5 bg-gray-200 rounded-full overflow-hidden mt-3">
             <motion.div
-              animate={{ width: ["0%", "70%", "0%"] }}
+              animate={{ width: ["0%", "100%", "0%"] }}
               transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
               className="h-full bg-blue-600 rounded-full"
             />
@@ -52,9 +52,9 @@ export function HowItWorksSection() {
       ),
     },
     {
-      icon: IconDownload,
-      title: "Download Hasil",
-      description: "Unduh hasil berkualitas profesional",
+      icon: IconChartBar,
+      title: "Lihat Insight & Laporan",
+      description: "Dapatkan insight keuangan dan laporan otomatis",
       content: (
         <div className="flex flex-col items-center justify-center h-full">
           <motion.div
@@ -62,10 +62,10 @@ export function HowItWorksSection() {
             transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
             className="w-20 h-20 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30 mb-4"
           >
-            <IconDownload className="w-8 h-8 text-white" />
+            <IconChartBar className="w-8 h-8 text-white" />
           </motion.div>
           <div className="flex gap-2">
-            {["PNG", "JPG", "PDF"].map((format) => (
+            {["Harian", "Mingguan", "Bulanan"].map((format) => (
               <span key={format} className="px-3 py-1 bg-white border rounded-lg text-xs text-gray-600">
                 {format}
               </span>
@@ -107,7 +107,7 @@ export function HowItWorksSection() {
             viewport={{ once: true }}
             className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900"
           >
-            3 Langkah Mudah Untuk Hasil Profesional
+            3 Langkah Mudah Kelola Keuangan Bisnis
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -116,7 +116,8 @@ export function HowItWorksSection() {
             transition={{ delay: 0.1 }}
             className="text-gray-600 text-lg leading-relaxed flex items-center"
           >
-            Tidak perlu keahlian desain. Upload foto, pilih tools AI, dan download hasil dalam hitungan detik.
+            Tidak perlu keahlian akuntansi. Catat modal, biarkan AI menghitung, dan lihat insight keuangan dalam
+            hitungan detik.
           </motion.p>
         </div>
 

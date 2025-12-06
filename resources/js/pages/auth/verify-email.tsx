@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import AuthLayout from "@/layouts/auth-layout"
 import { logout } from "@/routes"
-import { send } from "@/routes/verification"
+import { code } from "@/routes/verify"
 import { Form, Head } from "@inertiajs/react"
 import { Mail, LogOut, CheckCircle } from "lucide-react"
 
@@ -33,7 +33,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
           </div>
         )}
 
-        <Form {...send.form()} className="space-y-4">
+        <Form {...code.form()} className="space-y-4">
           {({ processing }) => (
             <>
               <Button disabled={processing} className="w-full bg-gray-900 text-white hover:bg-gray-800">

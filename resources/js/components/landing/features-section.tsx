@@ -1,30 +1,30 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { IconPhoto, IconSparkles, IconMessage, IconFileDescription } from "@tabler/icons-react"
+import { IconCoin, IconSparkles, IconChartLine, IconMessageChatbot, IconReportAnalytics } from "@tabler/icons-react"
 import { cn } from "@/lib/utils"
 
 export function FeaturesSection() {
   const features = [
     {
-      icon: IconPhoto,
-      title: "AI Poster Generator",
-      description: "Buat poster dan desain visual menakjubkan dengan AI dalam hitungan detik.",
+      icon: IconCoin,
+      title: "Tracking Modal",
+      description: "Catat modal awal, biaya bahan, operasional, dan semua pengeluaran bisnis dengan rapi.",
     },
     {
-      icon: IconSparkles,
-      title: "AI Photo Enhancer",
-      description: "Tingkatkan kualitas foto dengan upscaling cerdas, noise reduction, dan koreksi warna.",
+      icon: IconChartLine,
+      title: "Hitung Untung Bersih Otomatis",
+      description: "Lihat keuntungan harian, mingguan, bulanan, margin profit, dan grafik pertumbuhan.",
     },
     {
-      icon: IconMessage,
-      title: "AI Caption Generator",
-      description: "Generate caption menarik untuk postingan media sosial Anda secara otomatis.",
+      icon: IconReportAnalytics,
+      title: "Prediksi Balik Modal (BEP)",
+      description: "AI memprediksi berapa unit yang perlu dijual dan berapa hari sampai balik modal.",
     },
     {
-      icon: IconFileDescription,
-      title: "AI Product Description",
-      description: "Tulis deskripsi produk yang menarik dan mengkonversi pengunjung jadi pembeli.",
+      icon: IconMessageChatbot,
+      title: "AI Advisor untuk UMKM",
+      description: "Tanyakan apa saja seperti harga jual ideal, keamanan modal, atau cara meningkatkan profit.",
     },
   ]
 
@@ -51,11 +51,14 @@ export function FeaturesSection() {
         >
           <span className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 font-medium px-4 py-1.5 rounded-full text-sm mb-4">
             <IconSparkles className="w-4 h-4" />
-            Fitur AI
+            Kenapa FinSight?
           </span>
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 text-balance">Powerful AI Features</h2>
+          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 text-balance">
+            Financial Insight untuk UMKM
+          </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Semua yang Anda butuhkan untuk membuat konten menakjubkan dengan kecerdasan buatan
+            Insight keuangan yang biasanya hanya dimiliki bisnis besar, sekarang bisa dinikmati UMKM dengan cara
+            sederhana
           </p>
         </motion.div>
 

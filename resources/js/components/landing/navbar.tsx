@@ -212,8 +212,8 @@ export const MobileNavToggle = ({
 // NavbarLogo
 export const NavbarLogo = () => {
   return (
-    <a href="#" className="relative z-20 mr-4 flex items-center px-2 py-1">
-      <img src="/logo.png" alt="UMKMBoost AI" width={120} height={100} />
+    <a href="#" className="relative z-20 mr-4 flex items-center px-2 py-1 gap-2">
+      <span className="text-xl font-bold text-blue-600">FinSight</span>
     </a>
   )
 }

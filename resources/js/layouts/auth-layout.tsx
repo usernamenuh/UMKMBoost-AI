@@ -1,4 +1,5 @@
 import type { ReactNode } from "react"
+import AppLogoIcon from '@/components/app-logo-icon';
 import { TrendingUp, Users, Sparkles, MessageCircle, Rocket, ShieldCheck, BarChart3, Zap } from "lucide-react"
 import { Link } from "@inertiajs/react"
 
@@ -25,7 +26,7 @@ export default function AuthLayout({ children, title, description, variant = "lo
           {/* Logo */}
           <div className="flex items-center gap-3 mb-10">
             <Link href="/">
-              <img src="/logo.png" alt="UMKMBoots AI Logo" className="h-15 w-auto object-contain cursor-pointer" />
+              <AppLogoIcon />
             </Link>
           </div>
 

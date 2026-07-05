@@ -1,4 +1,5 @@
 import { IconBrandFacebook, IconBrandGithub, IconBrandInstagram, IconBrandLinkedin, IconBrandTwitter } from "@tabler/icons-react"
+import AppLogoIcon from '@/components/app-logo-icon';
 
 export function Footer() {
   const footerLinks = [
@@ -13,7 +14,7 @@ export function Footer() {
     <footer className="bg-[#0b0b0a] pt-8 pb-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center items-center mb-8">
-          <img src="/logo.png" alt="UMKMBoostAI Logo" className="h-14 w-auto" />
+          <AppLogoIcon />
         </div>
 
         {/* Navigation links centered */}

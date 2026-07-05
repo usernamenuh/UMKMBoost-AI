@@ -18,8 +18,10 @@ interface Business {
     type: string | null;
     description: string | null;
     is_active: boolean;
-    capital_records_count: number;
-    expenses_count: number;
+    initial_investment: number;
+    total_revenue: number;
+    total_expense: number;
+    net_profit: number;
 }
 
 interface BusinessIndexProps {
@@ -106,7 +108,7 @@ export default function BusinessIndex({ businesses }: BusinessIndexProps) {
                                                 Modal
                                             </div>
                                             <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                                                {formatCurrency(business.capital_records_count || 0)}
+                                                {formatCurrency(business.initial_investment || 0)}
                                             </p>
                                         </div>
                                         <div className="bg-red-50 dark:bg-red-900/20 rounded-lg p-4">
@@ -115,7 +117,7 @@ export default function BusinessIndex({ businesses }: BusinessIndexProps) {
                                                 Pengeluaran
                                             </div>
                                             <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                                                {formatCurrency(business.expenses_count || 0)}
+                                                {formatCurrency(business.total_expense || 0)}
                                             </p>
                                         </div>
                                     </div>

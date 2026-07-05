@@ -72,6 +72,11 @@ class ExpenseController extends Controller
 
         $business->expenses()->create($validated);
 
+        // Update total_expense
+        $business->update([
+            'total_expense' => $business->expenses()->sum('amount'),
+        ]);
+
         return redirect()->route('expense.index', $business)
             ->with('success', 'Pengeluaran berhasil dicatat!'); // ✅ Ganti 'status' dengan 'success'
     }
@@ -123,6 +128,11 @@ class ExpenseController extends Controller
 
         $expense->update($validated);
 
+        // Update total_expense
+        $business->update([
+            'total_expense' => $business->expenses()->sum('amount'),
+        ]);
+
         return redirect()->route('expense.index', $business)
             ->with('success', 'Pengeluaran berhasil diupdate!'); // ✅ Ganti 'status' dengan 'success'
     }
@@ -142,6 +152,11 @@ class ExpenseController extends Controller
         }
 
         $expense->delete();
+
+        // Update total_expense
+        $business->update([
+            'total_expense' => $business->expenses()->sum('amount'),
+        ]);
 
         return back()->with('success', 'Pengeluaran berhasil dihapus!'); // ✅ Ganti 'status' dengan 'success'
     }

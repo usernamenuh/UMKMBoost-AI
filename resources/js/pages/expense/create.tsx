@@ -1,7 +1,8 @@
-import React, { FormEvent, useState } from 'react';
-import { Head, useForm, Link } from '@inertiajs/react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
-import { IconArrowLeft, IconUpload, IconReceipt } from '@tabler/icons-react';
+import { type BreadcrumbItem } from '@/types';
+import { IconArrowLeft, IconDeviceFloppy, IconInfoCircle, IconReceipt, IconUpload } from '@tabler/icons-react';
 
 interface ExpenseCategory {
     id: number;
@@ -19,9 +20,20 @@ interface ExpenseCreateProps {
     business: Business;
 }
 
+const formatCurrencyInput = (value: string) => {
+    const digits = value.replace(/\D/g, '');
+
+    if (!digits) {
+        return '';
+    }
+
+    return new Intl.NumberFormat('id-ID').format(Number(digits));
+};
+
 export default function ExpenseCreate({ business }: ExpenseCreateProps) {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-    
+    const [amountDisplay, setAmountDisplay] = useState('');
+
     const { data, setData, post, processing, errors } = useForm({
         expense_category_id: '',
         amount: '',
@@ -31,6 +43,14 @@ export default function ExpenseCreate({ business }: ExpenseCreateProps) {
         receipt: null as File | null,
     });
 
+    const breadcrumbs: BreadcrumbItem[] = [
+        { title: 'Dashboard', href: '/dashboard' },
+        { title: 'Bisnis', href: '/business' },
+        { title: business.name, href: `/business/${business.id}` },
+        { title: 'Pengeluaran', href: `/business/${business.id}/expense` },
+        { title: 'Tambah Pengeluaran', href: '#' },
+    ];
+
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         post(`/business/${business.id}/expense`, {
@@ -38,10 +58,10 @@ export default function ExpenseCreate({ business }: ExpenseCreateProps) {
         });
     };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
         setData('receipt', file);
-        
+
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -53,45 +73,59 @@ export default function ExpenseCreate({ business }: ExpenseCreateProps) {
         }
     };
 
+    const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const rawValue = e.target.value;
+        const digitsOnly = rawValue.replace(/\D/g, '');
+
+        setData('amount', digitsOnly);
+        setAmountDisplay(formatCurrencyInput(rawValue));
+    };
+
     return (
-        <AppLayout>
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Tambah Pengeluaran" />
-            
-            <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+            <div className="flex h-full flex-1 flex-col gap-8 p-8">
                 {/* Header */}
-                <div className="mb-8">
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h1 className="text-3xl font-bold text-gray-900">Tambah Pengeluaran</h1>
+                        <p className="mt-2 text-base text-gray-600">
+                            Catat pengeluaran baru untuk <span className="font-semibold text-gray-900">{business.name}</span>
+                        </p>
+                    </div>
                     <Link
                         href={`/business/${business.id}/expense`}
-                        className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300 mb-4"
+                        className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-5 py-3 font-medium text-gray-700 transition hover:bg-gray-50"
                     >
-                        <IconArrowLeft className="h-4 w-4 mr-1" />
+                        <IconArrowLeft className="h-5 w-5" />
                         Kembali
                     </Link>
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                        Tambah Pengeluaran - {business.name}
-                    </h1>
-                    <p className="text-gray-600 dark:text-gray-400 mt-2">
-                        Catat pengeluaran baru untuk bisnis Anda
-                    </p>
                 </div>
 
-                {/* Form */}
-                <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
-                    <form onSubmit={handleSubmit}>
-                        <div className="space-y-6">
-                            {/* Kategori */}
+                {/* Form Card */}
+                <div className="rounded-xl border border-gray-200 bg-white p-8 shadow-lg">
+                    <div className="mb-8 flex items-center gap-4 border-b border-gray-200 pb-8">
+                        <div className="rounded-lg bg-red-100 p-4">
+                            <IconReceipt className="h-7 w-7 text-red-600" />
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-bold text-gray-900">Form Pengeluaran</h2>
+                            <p className="mt-1 text-sm text-gray-600">Isi detail pengeluaran yang Anda keluarkan</p>
+                        </div>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-7">
+                        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                             <div>
-                                <label 
-                                    htmlFor="expense_category_id" 
-                                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                                >
-                                    Kategori *
+                                <label htmlFor="expense_category_id" className="mb-3 block text-sm font-semibold text-gray-700">
+                                    Kategori <span className="text-red-500">*</span>
                                 </label>
                                 <select
                                     id="expense_category_id"
                                     value={data.expense_category_id}
                                     onChange={(e) => setData('expense_category_id', e.target.value)}
-                                    className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                    className="w-full rounded-lg border border-gray-300 px-5 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                                     required
                                     disabled={processing}
                                 >
@@ -102,177 +136,150 @@ export default function ExpenseCreate({ business }: ExpenseCreateProps) {
                                         </option>
                                     ))}
                                 </select>
-                                {errors.expense_category_id && (
-                                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                                        {errors.expense_category_id}
-                                    </p>
-                                )}
+                                {errors.expense_category_id && <p className="mt-2 text-sm text-red-600">{errors.expense_category_id}</p>}
                             </div>
 
-                            {/* Jumlah */}
                             <div>
-                                <label 
-                                    htmlFor="amount" 
-                                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                                >
-                                    Jumlah Pengeluaran *
+                                <label htmlFor="amount" className="mb-3 block text-sm font-semibold text-gray-700">
+                                    Jumlah Pengeluaran <span className="text-red-500">*</span>
+                                </label>
+                                <div className="relative">
+                                    <span className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-500 font-medium">Rp</span>
+                                    <input
+                                        id="amount"
+                                        type="text"
+                                        inputMode="numeric"
+                                        value={amountDisplay}
+                                        onChange={handleAmountChange}
+                                        placeholder="0"
+                                        className="w-full rounded-lg border border-gray-300 py-3 pl-14 pr-5 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                        required
+                                        disabled={processing}
+                                    />
+                                </div>
+                                {errors.amount && <p className="mt-2 text-sm text-red-600">{errors.amount}</p>}
+                            </div>
+                        </div>
+
+                        <div>
+                            <label htmlFor="description" className="mb-3 block text-sm font-semibold text-gray-700">
+                                Deskripsi <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                                id="description"
+                                type="text"
+                                value={data.description}
+                                onChange={(e) => setData('description', e.target.value)}
+                                placeholder="Contoh: Beli bahan baku, bayar listrik, dll"
+                                className="w-full rounded-lg border border-gray-300 px-5 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                required
+                                disabled={processing}
+                            />
+                            {errors.description && <p className="mt-2 text-sm text-red-600">{errors.description}</p>}
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                            <div>
+                                <label htmlFor="expense_date" className="mb-3 block text-sm font-semibold text-gray-700">
+                                    Tanggal Pengeluaran <span className="text-red-500">*</span>
                                 </label>
                                 <input
-                                    type="number"
-                                    id="amount"
-                                    value={data.amount}
-                                    onChange={(e) => setData('amount', e.target.value)}
-                                    className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                    required
-                                    min="0"
-                                    step="1"
-                                    disabled={processing}
-                                />
-                                {errors.amount && (
-                                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                                        {errors.amount}
-                                    </p>
-                                )}
-                            </div>
-
-                            {/* Deskripsi */}
-                            <div>
-                                <label 
-                                    htmlFor="description" 
-                                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                                >
-                                    Deskripsi *
-                                </label>
-                                <input
-                                    type="text"
-                                    id="description"
-                                    value={data.description}
-                                    onChange={(e) => setData('description', e.target.value)}
-                                    className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                    id="expense_date"
+                                    type="date"
+                                    value={data.expense_date}
+                                    onChange={(e) => setData('expense_date', e.target.value)}
+                                    className="w-full rounded-lg border border-gray-300 px-5 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                                     required
                                     disabled={processing}
                                 />
-                                {errors.description && (
-                                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                                        {errors.description}
-                                    </p>
-                                )}
+                                {errors.expense_date && <p className="mt-2 text-sm text-red-600">{errors.expense_date}</p>}
                             </div>
 
-                            {/* Catatan */}
                             <div>
-                                <label 
-                                    htmlFor="notes" 
-                                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                                >
-                                    Catatan
+                                <label htmlFor="notes" className="mb-3 block text-sm font-semibold text-gray-700">
+                                    Catatan (Opsional)
                                 </label>
                                 <textarea
                                     id="notes"
-                                    rows={2}
+                                    rows={4}
                                     value={data.notes}
                                     onChange={(e) => setData('notes', e.target.value)}
-                                    className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                    placeholder="Tambahkan catatan tambahan jika diperlukan..."
+                                    className="w-full resize-none rounded-lg border border-gray-300 px-5 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                                     disabled={processing}
                                 />
-                                {errors.notes && (
-                                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                                        {errors.notes}
-                                    </p>
-                                )}
-                            </div>
-
-                            {/* Tanggal */}
-                            <div>
-                                <label 
-                                    htmlFor="expense_date" 
-                                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                                >
-                                    Tanggal *
-                                </label>
-                                <input
-                                    type="date"
-                                    id="expense_date"
-                                    value={data.expense_date}
-                                    onChange={(e) => setData('expense_date', e.target.value)}
-                                    className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                    required
-                                    disabled={processing}
-                                />
-                                {errors.expense_date && (
-                                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                                        {errors.expense_date}
-                                    </p>
-                                )}
-                            </div>
-
-                            {/* Bukti Pembayaran */}
-                            <div>
-                                <label 
-                                    htmlFor="receipt" 
-                                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                                >
-                                    Bukti Pembayaran (optional)
-                                </label>
-                                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md">
-                                    <div className="space-y-1 text-center">
-                                        <IconUpload className="mx-auto h-12 w-12 text-gray-400" />
-                                        <div className="flex text-sm text-gray-600 dark:text-gray-400">
-                                            <label className="relative cursor-pointer bg-white dark:bg-gray-800 rounded-md font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-                                                <span>Upload file</span>
-                                                <input
-                                                    id="receipt"
-                                                    type="file"
-                                                    accept="image/*"
-                                                    onChange={handleFileChange}
-                                                    className="sr-only"
-                                                    disabled={processing}
-                                                />
-                                            </label>
-                                            <p className="pl-1">atau drag & drop</p>
-                                        </div>
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                                            PNG, JPG, GIF up to 2MB
-                                        </p>
-                                    </div>
-                                </div>
-                                {previewUrl && (
-                                    <div className="mt-4">
-                                        <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Preview:</p>
-                                        <img 
-                                            src={previewUrl} 
-                                            alt="Preview" 
-                                            className="max-h-48 rounded-md"
-                                        />
-                                    </div>
-                                )}
-                                {errors.receipt && (
-                                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                                        {errors.receipt}
-                                    </p>
-                                )}
-                            </div>
-
-                            {/* Action Buttons */}
-                            <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200 dark:border-gray-700">
-                                <Link
-                                    href={`/business/${business.id}/expense`}
-                                    className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                    disabled={processing}
-                                >
-                                    Batal
-                                </Link>
-                                <button
-                                    type="submit"
-                                    disabled={processing}
-                                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                                >
-                                    <IconReceipt className="h-4 w-4 mr-2" />
-                                    {processing ? 'Menyimpan...' : 'Simpan Pengeluaran'}
-                                </button>
+                                {errors.notes && <p className="mt-2 text-sm text-red-600">{errors.notes}</p>}
                             </div>
                         </div>
+
+                        <div>
+                            <label htmlFor="receipt" className="mb-3 block text-sm font-semibold text-gray-700">
+                                Bukti Pembayaran (Opsional)
+                            </label>
+                            <div className="rounded-xl border-2 border-dashed border-gray-300 p-6 text-center">
+                                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
+                                    <IconUpload className="h-6 w-6 text-gray-500" />
+                                </div>
+                                <div className="mt-4 flex justify-center text-sm text-gray-600">
+                                    <label className="relative cursor-pointer rounded-md font-medium text-blue-600 hover:text-blue-500">
+                                        <span>Upload file</span>
+                                        <input
+                                            id="receipt"
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handleFileChange}
+                                            className="sr-only"
+                                            disabled={processing}
+                                        />
+                                    </label>
+                                    <p className="pl-1">atau drag & drop</p>
+                                </div>
+                                <p className="mt-2 text-xs text-gray-500">PNG, JPG, GIF hingga 2MB</p>
+                            </div>
+                            {previewUrl && (
+                                <div className="mt-4 rounded-lg border border-gray-200 bg-gray-50 p-4">
+                                    <p className="mb-2 text-sm font-semibold text-gray-700">Preview:</p>
+                                    <img src={previewUrl} alt="Preview" className="max-h-48 rounded-md" />
+                                </div>
+                            )}
+                            {errors.receipt && <p className="mt-2 text-sm text-red-600">{errors.receipt}</p>}
+                        </div>
+
+                        <div className="flex items-center justify-end gap-4 border-t border-gray-200 pt-8">
+                            <Link
+                                href={`/business/${business.id}/expense`}
+                                className="rounded-lg border border-gray-300 bg-white px-7 py-3 text-base font-medium text-gray-700 transition hover:bg-gray-50"
+                            >
+                                Batal
+                            </Link>
+                            <button
+                                type="submit"
+                                disabled={processing}
+                                className="flex items-center gap-2 rounded-lg bg-red-600 px-7 py-3 text-base font-medium text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+                            >
+                                <IconDeviceFloppy className="h-5 w-5" />
+                                {processing ? 'Menyimpan...' : 'Simpan Pengeluaran'}
+                            </button>
+                        </div>
                     </form>
+                </div>
+
+                <div className="rounded-xl border border-blue-200 bg-blue-50 p-6">
+                    <div className="flex gap-4">
+                        <div className="flex-shrink-0">
+                            <IconInfoCircle className="h-6 w-6 text-blue-600" />
+                        </div>
+                        <div className="flex-1">
+                            <h3 className="text-sm font-semibold text-blue-900">Tips Mencatat Pengeluaran</h3>
+                            <div className="mt-3 text-sm text-blue-800">
+                                <ul className="list-disc space-y-2 pl-5">
+                                    <li>Catat pengeluaran sesegera mungkin agar pencatatan tetap akurat</li>
+                                    <li>Tambahkan bukti pembayaran untuk memudahkan pengecekan</li>
+                                    <li>Gunakan kategori yang konsisten untuk analisis bisnis</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </AppLayout>

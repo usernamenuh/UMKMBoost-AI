@@ -27,9 +27,21 @@ class BusinessController extends Controller
         }
 
         $businesses = $user->businesses()
-            ->withCount(['capitalRecords', 'expenses'])
             ->latest()
-            ->get();
+            ->get()
+            ->map(function ($business) {
+                return [
+                    'id' => $business->id,
+                    'name' => $business->name,
+                    'type' => $business->type,
+                    'description' => $business->description,
+                    'is_active' => $business->is_active,
+                    'initial_investment' => $business->initial_investment,
+                    'total_revenue' => $business->total_revenue,
+                    'total_expense' => $business->total_expense,
+                    'net_profit' => $business->net_profit,
+                ];
+            });
 
         return Inertia::render('business/index', [
             'businesses' => $businesses,

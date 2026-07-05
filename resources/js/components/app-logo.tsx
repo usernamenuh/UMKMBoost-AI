@@ -1,6 +1,19 @@
-import AppLogoIcon from './app-logo-icon';
+import { useSidebar } from '@/components/ui/sidebar';
 
 export default function AppLogo() {
+    const { state } = useSidebar();
+    const isCollapsed = state === 'collapsed';
+
+    if (isCollapsed) {
+        return (
+            <div className="flex items-center justify-center w-full">
+                <span className="font-bold text-lg bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+                    F
+                </span>
+            </div>
+        );
+    }
+
     return (
         <>
             <div className="ml-1 grid flex-1 text-left text-sm">

@@ -75,13 +75,6 @@ export default function BusinessShow({ business, summary }: BusinessShowProps) {
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
                     <div>
-                        <Link
-                            href="/business"
-                            className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300 mb-4"
-                        >
-                            <IconArrowLeft className="h-4 w-4 mr-1" />
-                            Kembali
-                        </Link>
                         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
                             {business.name}
                         </h1>
@@ -98,7 +91,14 @@ export default function BusinessShow({ business, summary }: BusinessShowProps) {
                             </span>
                         </div>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                        <Link
+                            href="/business"
+                            className="inline-flex items-center px-5 py-3 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition font-medium text-base"
+                        >
+                            <IconArrowLeft className="h-4 w-4 mr-1" />
+                            Kembali
+                        </Link>
                         <Link
                             href={`/business/${business.id}/edit`}
                             className="inline-flex items-center px-5 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition"

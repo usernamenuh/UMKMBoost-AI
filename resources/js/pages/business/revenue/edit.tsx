@@ -5,6 +5,21 @@ import { Head } from '@inertiajs/react';
 import { IconArrowLeft, IconCoin, IconDeviceFloppy } from '@tabler/icons-react';
 import { FormEventHandler } from 'react';
 
+const normalizeDate = (value: string) => {
+    if (!value) {
+        return new Date().toISOString().split('T')[0];
+    }
+
+    const normalized = value.split('T')[0].split(' ')[0];
+    const [year, month, day] = normalized.split('-');
+
+    if (!year || !month || !day) {
+        return new Date().toISOString().split('T')[0];
+    }
+
+    return `${year}-${month}-${day}`;
+};
+
 interface Business {
     id: number;
     name: string;
@@ -29,7 +44,7 @@ export default function EditRevenue({ business, revenue }: Props) {
     const { data, setData, put, processing, errors } = useForm({
         description: revenue.description || '',
         amount: revenue.amount || '',
-        revenue_date: revenue.revenue_date || new Date().toISOString().split('T')[0],
+        revenue_date: normalizeDate(revenue.revenue_date || ''),
         category: revenue.category || 'Penjualan',
         notes: revenue.notes || '',
     });
@@ -141,7 +156,7 @@ export default function EditRevenue({ business, revenue }: Props) {
                                     id="revenue_date"
                                     type="date"
                                     value={data.revenue_date}
-                                    onChange={(e) => setData('revenue_date', e.target.value)}
+                                    onChange={(e) => setData('revenue_date', normalizeDate(e.target.value))}
                                     className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500/20 focus:border-green-500 focus:outline-none text-base transition"
                                 />
                                 {errors.revenue_date && (

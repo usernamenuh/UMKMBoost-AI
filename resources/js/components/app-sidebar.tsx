@@ -9,6 +9,7 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    useSidebar,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
@@ -149,14 +150,16 @@ function BusinessSidebarSection() {
 // Atau versi yang lebih simple (tanpa collapsible):
 function SimpleBusinessSidebar() {
     const { props } = usePage();
+    const { state } = useSidebar();
     const [businesses, setBusinesses] = useState<Business[]>([]);
+    const isCollapsed = state === 'collapsed';
     
     useEffect(() => {
         const data = props.businesses || props.user_businesses || props.global_businesses || [];
         setBusinesses(Array.isArray(data) ? data : []);
     }, [props]);
 
-    if (businesses.length === 0) {
+    if (businesses.length === 0 || isCollapsed) {
         return null;
     }
 
@@ -164,16 +167,16 @@ function SimpleBusinessSidebar() {
         <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
             <div className="px-4 mb-4">
                 <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    AKSES CEPAT BISNIS
+                    AKSES CEPAT
                 </h3>
             </div>
             
             <div className="space-y-3">
-                {businesses.map((business) => (
+                {businesses.slice(0, 3).map((business) => (
                     <div key={business.id} className="px-4">
                         {/* Business Info */}
                         <div className="flex items-center gap-2 mb-2">
-                            <div className={`h-2 w-2 rounded-full ${
+                            <div className={`h-2 w-2 rounded-full flex-shrink-0 ${
                                 business.is_active 
                                     ? 'bg-green-500' 
                                     : 'bg-gray-300 dark:bg-gray-600'
@@ -181,11 +184,6 @@ function SimpleBusinessSidebar() {
                             <span className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate">
                                 {business.name}
                             </span>
-                            {business.type && (
-                                <span className="text-xs text-gray-500 dark:text-gray-400">
-                                    ({business.type})
-                                </span>
-                            )}
                         </div>
                         
                         {/* Quick Actions - Horizontal */}

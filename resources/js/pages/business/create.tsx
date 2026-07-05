@@ -1,7 +1,8 @@
-import React, { FormEvent } from 'react';
-import { Head, useForm, Link } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
-import { IconArrowLeft } from '@tabler/icons-react';
+import { type BreadcrumbItem } from '@/types';
+import { IconArrowLeft, IconBuildingStore, IconDeviceFloppy, IconInfoCircle } from '@tabler/icons-react';
+import { type FormEvent } from 'react';
 
 export default function BusinessCreate() {
     const { data, setData, post, processing, errors } = useForm({
@@ -11,149 +12,153 @@ export default function BusinessCreate() {
         started_at: '',
     });
 
+    const breadcrumbs: BreadcrumbItem[] = [
+        { title: 'Dashboard', href: '/dashboard' },
+        { title: 'Bisnis', href: '/business' },
+        { title: 'Tambah Bisnis', href: '#' },
+    ];
+
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         post('/business');
     };
 
     return (
-        <AppLayout>
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Buat Bisnis Baru" />
-            
-            <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+            <div className="flex h-full flex-1 flex-col gap-8 p-8">
                 {/* Header */}
-                <div className="mb-8">
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h1 className="text-3xl font-bold text-gray-900">Buat Bisnis Baru</h1>
+                        <p className="mt-2 text-base text-gray-600">
+                            Isi informasi bisnis Anda agar semua pencatatan lebih terorganisir
+                        </p>
+                    </div>
                     <Link
                         href="/business"
-                        className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300 mb-4"
+                        className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-5 py-3 font-medium text-gray-700 transition hover:bg-gray-50"
                     >
-                        <IconArrowLeft className="h-4 w-4 mr-1" />
+                        <IconArrowLeft className="h-5 w-5" />
                         Kembali
                     </Link>
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                        Buat Bisnis Baru
-                    </h1>
-                    <p className="text-gray-600 dark:text-gray-400 mt-2">
-                        Isi informasi bisnis Anda
-                    </p>
                 </div>
 
-                {/* Form */}
-                <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
-                    <form onSubmit={handleSubmit}>
-                        <div className="space-y-6">
-                            {/* Nama Bisnis */}
+                {/* Form Card */}
+                <div className="rounded-xl border border-gray-200 bg-white p-8 shadow-lg">
+                    <div className="mb-8 flex items-center gap-4 border-b border-gray-200 pb-8">
+                        <div className="rounded-lg bg-blue-100 p-4">
+                            <IconBuildingStore className="h-7 w-7 text-blue-600" />
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-bold text-gray-900">Form Informasi Bisnis</h2>
+                            <p className="mt-1 text-sm text-gray-600">Lengkapi data utama bisnis Anda</p>
+                        </div>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-7">
+                        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                             <div>
-                                <label 
-                                    htmlFor="name" 
-                                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                                >
-                                    Nama Bisnis *
+                                <label htmlFor="name" className="mb-3 block text-sm font-semibold text-gray-700">
+                                    Nama Bisnis <span className="text-red-500">*</span>
                                 </label>
                                 <input
-                                    type="text"
                                     id="name"
+                                    type="text"
                                     value={data.name}
                                     onChange={(e) => setData('name', e.target.value)}
-                                    className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                    placeholder="Contoh: Toko Sari Jaya"
+                                    className="w-full rounded-lg border border-gray-300 px-5 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                                     required
                                     disabled={processing}
                                 />
-                                {errors.name && (
-                                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                                        {errors.name}
-                                    </p>
-                                )}
+                                {errors.name && <p className="mt-2 text-sm text-red-600">{errors.name}</p>}
                             </div>
 
-                            {/* Tipe Bisnis */}
                             <div>
-                                <label 
-                                    htmlFor="type" 
-                                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                                >
+                                <label htmlFor="type" className="mb-3 block text-sm font-semibold text-gray-700">
                                     Tipe Bisnis
                                 </label>
                                 <input
-                                    type="text"
                                     id="type"
+                                    type="text"
                                     value={data.type}
                                     onChange={(e) => setData('type', e.target.value)}
-                                    className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                    placeholder="Contoh: Retail, Jasa, Kuliner"
+                                    className="w-full rounded-lg border border-gray-300 px-5 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                                     disabled={processing}
                                 />
-                                {errors.type && (
-                                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                                        {errors.type}
-                                    </p>
-                                )}
-                            </div>
-
-                            {/* Deskripsi */}
-                            <div>
-                                <label 
-                                    htmlFor="description" 
-                                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                                >
-                                    Deskripsi
-                                </label>
-                                <textarea
-                                    id="description"
-                                    rows={3}
-                                    value={data.description}
-                                    onChange={(e) => setData('description', e.target.value)}
-                                    className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                    disabled={processing}
-                                />
-                                {errors.description && (
-                                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                                        {errors.description}
-                                    </p>
-                                )}
-                            </div>
-
-                            {/* Tanggal Mulai */}
-                            <div>
-                                <label 
-                                    htmlFor="started_at" 
-                                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                                >
-                                    Tanggal Mulai
-                                </label>
-                                <input
-                                    type="date"
-                                    id="started_at"
-                                    value={data.started_at}
-                                    onChange={(e) => setData('started_at', e.target.value)}
-                                    className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                    disabled={processing}
-                                />
-                                {errors.started_at && (
-                                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                                        {errors.started_at}
-                                    </p>
-                                )}
-                            </div>
-
-                            {/* Action Buttons */}
-                            <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200 dark:border-gray-700">
-                                <Link
-                                    href="/business"
-                                    className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                    disabled={processing}
-                                >
-                                    Batal
-                                </Link>
-                                <button
-                                    type="submit"
-                                    disabled={processing}
-                                    className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                                >
-                                    {processing ? 'Menyimpan...' : 'Simpan Bisnis'}
-                                </button>
+                                {errors.type && <p className="mt-2 text-sm text-red-600">{errors.type}</p>}
                             </div>
                         </div>
+
+                        <div>
+                            <label htmlFor="description" className="mb-3 block text-sm font-semibold text-gray-700">
+                                Deskripsi
+                            </label>
+                            <textarea
+                                id="description"
+                                rows={4}
+                                value={data.description}
+                                onChange={(e) => setData('description', e.target.value)}
+                                placeholder="Jelaskan singkat tentang bisnis Anda..."
+                                className="w-full resize-none rounded-lg border border-gray-300 px-5 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                disabled={processing}
+                            />
+                            {errors.description && <p className="mt-2 text-sm text-red-600">{errors.description}</p>}
+                        </div>
+
+                        <div>
+                            <label htmlFor="started_at" className="mb-3 block text-sm font-semibold text-gray-700">
+                                Tanggal Mulai
+                            </label>
+                            <input
+                                id="started_at"
+                                type="date"
+                                value={data.started_at}
+                                onChange={(e) => setData('started_at', e.target.value)}
+                                className="w-full rounded-lg border border-gray-300 px-5 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                disabled={processing}
+                            />
+                            {errors.started_at && <p className="mt-2 text-sm text-red-600">{errors.started_at}</p>}
+                        </div>
+
+                        <div className="flex items-center justify-end gap-4 border-t border-gray-200 pt-8">
+                            <Link
+                                href="/business"
+                                className="rounded-lg border border-gray-300 bg-white px-7 py-3 text-base font-medium text-gray-700 transition hover:bg-gray-50"
+                            >
+                                Batal
+                            </Link>
+                            <button
+                                type="submit"
+                                disabled={processing}
+                                className="flex items-center gap-2 rounded-lg bg-blue-600 px-7 py-3 text-base font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                            >
+                                <IconDeviceFloppy className="h-5 w-5" />
+                                {processing ? 'Menyimpan...' : 'Simpan Bisnis'}
+                            </button>
+                        </div>
                     </form>
+                </div>
+
+                <div className="rounded-xl border border-blue-200 bg-blue-50 p-6">
+                    <div className="flex gap-4">
+                        <div className="flex-shrink-0">
+                            <IconInfoCircle className="h-6 w-6 text-blue-600" />
+                        </div>
+                        <div className="flex-1">
+                            <h3 className="text-sm font-semibold text-blue-900">Tips Mengisi Data Bisnis</h3>
+                            <div className="mt-3 text-sm text-blue-800">
+                                <ul className="list-disc space-y-2 pl-5">
+                                    <li>Isi nama bisnis dengan jelas agar mudah dikenali di dashboard</li>
+                                    <li>Tambah tipe bisnis untuk memudahkan pengelompokan</li>
+                                    <li>Masukkan tanggal mulai jika Anda ingin melihat riwayat pertumbuhan bisnis</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </AppLayout>

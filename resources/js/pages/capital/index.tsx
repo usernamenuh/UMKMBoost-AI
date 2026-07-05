@@ -95,20 +95,22 @@ export default function CapitalIndex({ business, capitals, total }: CapitalIndex
             
             <div className="flex flex-col h-full gap-8 p-8">
                 {/* Header */}
-                <div>
+                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+                    <div>
+                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                            Modal - {business.name}
+                        </h1>
+                        <p className="text-base text-gray-600 dark:text-gray-400">
+                            Kelola catatan modal bisnis Anda
+                        </p>
+                    </div>
                     <Link
                         href={`/business/${business.id}`}
-                        className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300 mb-4"
+                        className="inline-flex items-center px-5 py-3 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition font-medium text-base"
                     >
                         <IconArrowLeft className="h-4 w-4 mr-1" />
                         Kembali ke Bisnis
                     </Link>
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                        Modal - {business.name}
-                    </h1>
-                    <p className="text-base text-gray-600 dark:text-gray-400">
-                        Kelola catatan modal bisnis Anda
-                    </p>
                 </div>
 
                 {/* Statistics Cards */}

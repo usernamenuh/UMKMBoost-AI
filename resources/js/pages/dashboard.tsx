@@ -135,98 +135,98 @@ export default function Dashboard({
                 {/* Statistik Utama */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                     {/* Total Modal */}
-                    <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm text-gray-500">Total Modal</p>
-                                <h3 className="text-2xl font-bold mt-1">{formatCurrency(total_capital)}</h3>
+                    <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
+                        <div className="flex items-start justify-between gap-3">
+                            <div className="flex-1 min-w-0">
+                                <p className="text-sm text-gray-500 font-medium">Total Modal</p>
+                                <h3 className="text-xl font-bold mt-2 truncate">{formatCurrency(total_capital)}</h3>
                             </div>
-                            <div className="p-3 bg-blue-100 rounded-lg">
+                            <div className="p-3 bg-blue-100 rounded-lg flex-shrink-0">
                                 <IconWallet className="h-6 w-6 text-blue-600" />
                             </div>
                         </div>
-                        <div className="mt-3 text-xs text-gray-500">
+                        <div className="mt-4 text-xs text-gray-500 flex-grow">
                             Modal keseluruhan bisnis
                         </div>
                     </div>
 
                     {/* Total Pendapatan */}
-                    <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm text-gray-500">Total Pendapatan</p>
-                                <h3 className="text-2xl font-bold mt-1 text-green-600">{formatCurrency(total_revenue)}</h3>
+                    <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
+                        <div className="flex items-start justify-between gap-3">
+                            <div className="flex-1 min-w-0">
+                                <p className="text-sm text-gray-500 font-medium">Total Pendapatan</p>
+                                <h3 className="text-xl font-bold mt-2 text-green-600 truncate">{formatCurrency(total_revenue)}</h3>
                             </div>
-                            <div className="p-3 bg-green-100 rounded-lg">
+                            <div className="p-3 bg-green-100 rounded-lg flex-shrink-0">
                                 <IconTrendingUp className="h-6 w-6 text-green-600" />
                             </div>
                         </div>
-                        <div className="mt-3 text-xs text-gray-500">
+                        <div className="mt-4 text-xs text-gray-500 flex-grow">
                             Pendapatan kotor
                         </div>
                     </div>
 
                     {/* Total Pengeluaran */}
-                    <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm text-gray-500">Total Pengeluaran</p>
-                                <h3 className="text-2xl font-bold mt-1 text-red-600">{formatCurrency(total_expenses)}</h3>
+                    <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
+                        <div className="flex items-start justify-between gap-3">
+                            <div className="flex-1 min-w-0">
+                                <p className="text-sm text-gray-500 font-medium">Total Pengeluaran</p>
+                                <h3 className="text-xl font-bold mt-2 text-red-600 truncate">{formatCurrency(total_expenses)}</h3>
                             </div>
-                            <div className="p-3 bg-red-100 rounded-lg">
+                            <div className="p-3 bg-red-100 rounded-lg flex-shrink-0">
                                 <IconTrendingDown className="h-6 w-6 text-red-600" />
                             </div>
                         </div>
-                        <div className="mt-3 text-xs text-gray-500">
+                        <div className="mt-4 text-xs text-gray-500 flex-grow">
                             Pengeluaran operasional
                         </div>
                     </div>
 
                     {/* Laba Bersih */}
-                    <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm text-gray-500">Laba Bersih</p>
-                                <h3 className={`text-2xl font-bold mt-1 ${total_profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                    <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
+                        <div className="flex items-start justify-between gap-3">
+                            <div className="flex-1 min-w-0">
+                                <p className="text-sm text-gray-500 font-medium">Laba Bersih</p>
+                                <h3 className={`text-xl font-bold mt-2 truncate ${total_profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                                     {formatCurrency(total_profit)}
                                 </h3>
                             </div>
-                            <div className={`p-3 ${total_profit >= 0 ? 'bg-green-100' : 'bg-red-100'} rounded-lg`}>
+                            <div className={`p-3 ${total_profit >= 0 ? 'bg-green-100' : 'bg-red-100'} rounded-lg flex-shrink-0`}>
                                 <IconCash className={`h-6 w-6 ${total_profit >= 0 ? 'text-green-600' : 'text-red-600'}`} />
                             </div>
                         </div>
-                        <div className="mt-3 text-xs text-gray-500">
+                        <div className="mt-4 text-xs text-gray-500 flex-grow">
                             Pendapatan - Pengeluaran
                         </div>
                     </div>
 
                     {/* ROI Progress */}
-                    <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm text-gray-500">Progress ROI</p>
-                                <div className="flex items-baseline gap-2 mt-1">
-                                    <h3 className="text-2xl font-bold text-purple-600">
+                    <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
+                        <div className="flex items-start justify-between gap-3">
+                            <div className="flex-1 min-w-0">
+                                <p className="text-sm text-gray-500 font-medium">Progress ROI</p>
+                                <div className="flex items-baseline gap-2 mt-2">
+                                    <h3 className="text-xl font-bold text-purple-600 truncate">
                                         {roi_estimation.percentage.toFixed(1)}%
                                     </h3>
                                     {roi_estimation.is_profitable && (
-                                        <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full font-medium">
-                                            BALIK MODAL ✓
+                                        <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full font-medium flex-shrink-0">
+                                            ✓
                                         </span>
                                     )}
                                 </div>
                             </div>
-                            <div className="p-3 bg-purple-100 rounded-lg">
+                            <div className="p-3 bg-purple-100 rounded-lg flex-shrink-0">
                                 <IconBusinessplan className="h-6 w-6 text-purple-600" />
                             </div>
                         </div>
-                        <div className="mt-3">
+                        <div className="mt-4 text-xs flex-grow">
                             {roi_estimation.is_profitable ? (
-                                <div className="text-xs text-emerald-600 font-medium">
-                                    🎉 Modal sudah kembali!
+                                <div className="text-emerald-600 font-medium">
+                                    Modal sudah kembali!
                                 </div>
                             ) : (
-                                <div className="text-xs text-gray-500">
+                                <div className="text-gray-500 truncate">
                                     Kurang {formatCurrency(roi_estimation.remaining)}
                                 </div>
                             )}

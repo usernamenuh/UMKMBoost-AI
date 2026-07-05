@@ -93,52 +93,48 @@ export default function CapitalIndex({ business, capitals, total }: CapitalIndex
         <AppLayout>
             <Head title={`Modal - ${business.name}`} />
             
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="flex flex-col h-full gap-8 p-8">
                 {/* Header */}
-                <div className="mb-8">
-                    <div className="flex items-center justify-between mb-4">
-                        <Link
-                            href={`/business/${business.id}`}
-                            className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900"
-                        >
-                            <IconArrowLeft className="h-4 w-4 mr-1" />
-                            Kembali ke Bisnis
-                        </Link>
-                        <div className="text-right">
-                            <h1 className="text-2xl font-bold text-gray-900">
-                                Modal - {business.name}
-                            </h1>
-                            <p className="text-gray-600">
-                                Kelola catatan modal bisnis Anda
-                            </p>
-                        </div>
-                    </div>
+                <div>
+                    <Link
+                        href={`/business/${business.id}`}
+                        className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300 mb-4"
+                    >
+                        <IconArrowLeft className="h-4 w-4 mr-1" />
+                        Kembali ke Bisnis
+                    </Link>
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                        Modal - {business.name}
+                    </h1>
+                    <p className="text-base text-gray-600 dark:text-gray-400">
+                        Kelola catatan modal bisnis Anda
+                    </p>
                 </div>
 
-                {/* Statistik */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow p-6 text-white">
-                        <div className="flex items-center">
-                            <div className="p-3 bg-white/20 rounded-lg">
-                                <IconWallet className="h-6 w-6" />
+                {/* Statistics Cards */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg p-8 text-white">
+                        <div className="flex items-center gap-4">
+                            <div className="p-4 bg-white/20 rounded-lg">
+                                <IconWallet className="h-8 w-8" />
                             </div>
-                            <div className="ml-4">
-                                <p className="text-sm font-medium">Total Modal</p>
-                                <p className="text-2xl font-bold">
+                            <div>
+                                <p className="text-sm font-medium text-blue-100">Total Modal</p>
+                                <p className="text-3xl font-bold mt-2">
                                     {formatCurrency(displayTotal)}
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow p-6">
-                        <div className="flex items-center">
-                            <div className="p-3 bg-green-100 rounded-lg">
-                                <IconTrendingUp className="h-6 w-6 text-green-600" />
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 p-8">
+                        <div className="flex items-center gap-4">
+                            <div className="p-4 bg-green-100 dark:bg-green-900 rounded-lg">
+                                <IconTrendingUp className="h-8 w-8 text-green-600 dark:text-green-300" />
                             </div>
-                            <div className="ml-4">
-                                <p className="text-sm text-gray-500">Jumlah Catatan</p>
-                                <p className="text-2xl font-bold text-gray-900">
+                            <div>
+                                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Jumlah Catatan</p>
+                                <p className="text-3xl font-bold text-gray-900 dark:text-white mt-2">
                                     {capitalData.length}
                                     {pagination && ` dari ${pagination.total}`}
                                 </p>
@@ -146,14 +142,14 @@ export default function CapitalIndex({ business, capitals, total }: CapitalIndex
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow p-6">
-                        <div className="flex items-center">
-                            <div className="p-3 bg-blue-100 rounded-lg">
-                                <IconCurrencyDollar className="h-6 w-6 text-blue-600" />
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 p-8">
+                        <div className="flex items-center gap-4">
+                            <div className="p-4 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                                <IconCurrencyDollar className="h-8 w-8 text-blue-600 dark:text-blue-300" />
                             </div>
-                            <div className="ml-4">
-                                <p className="text-sm text-gray-500">Rata-rata per Catatan</p>
-                                <p className="text-2xl font-bold text-gray-900">
+                            <div>
+                                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Rata-rata per Catatan</p>
+                                <p className="text-3xl font-bold text-gray-900 dark:text-white mt-2">
                                     {capitalData.length > 0 
                                         ? formatCurrency(displayTotal / capitalData.length)
                                         : formatCurrency(0)
@@ -166,28 +162,28 @@ export default function CapitalIndex({ business, capitals, total }: CapitalIndex
 
                 {/* Content */}
                 <div className="grid lg:grid-cols-3 gap-8">
-                    {/* Info dan Aksi */}
-                    <div className="lg:col-span-1">
-                        <div className="bg-white rounded-lg shadow p-6 mb-6">
-                            <div className="flex items-center mb-6">
-                                <IconInfoCircle className="h-5 w-5 mr-2 text-blue-500" />
-                                <h2 className="text-lg font-semibold">Tentang Modal</h2>
+                    {/* Info Section */}
+                    <div>
+                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 p-8 mb-6">
+                            <div className="flex items-center gap-3 mb-6">
+                                <IconInfoCircle className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Tentang Modal</h2>
                             </div>
-                            <p className="text-sm text-gray-600 mb-4">
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
                                 Modal adalah dana awal yang Anda investasikan untuk memulai dan menjalankan bisnis Anda. 
                                 Catat setiap tambahan modal untuk melacak total investasi Anda.
                             </p>
-                            <ul className="text-sm text-gray-600 space-y-2">
-                                <li className="flex items-start">
-                                    <IconCurrencyDollar className="h-4 w-4 mr-2 text-green-500 flex-shrink-0 mt-0.5" />
+                            <ul className="text-sm text-gray-700 dark:text-gray-300 space-y-3">
+                                <li className="flex items-start gap-3">
+                                    <IconCurrencyDollar className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
                                     <span>Modal awal untuk memulai bisnis</span>
                                 </li>
-                                <li className="flex items-start">
-                                    <IconTrendingUp className="h-4 w-4 mr-2 text-blue-500 flex-shrink-0 mt-0.5" />
+                                <li className="flex items-start gap-3">
+                                    <IconTrendingUp className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
                                     <span>Tambahan modal untuk ekspansi</span>
                                 </li>
-                                <li className="flex items-start">
-                                    <IconWallet className="h-4 w-4 mr-2 text-purple-500 flex-shrink-0 mt-0.5" />
+                                <li className="flex items-start gap-3">
+                                    <IconWallet className="h-5 w-5 text-purple-500 flex-shrink-0 mt-0.5" />
                                     <span>Investasi dari investor atau pinjaman</span>
                                 </li>
                             </ul>
@@ -195,23 +191,23 @@ export default function CapitalIndex({ business, capitals, total }: CapitalIndex
 
                         <Link
                             href={`/business/${business.id}/capital/create`}
-                            className="w-full flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow"
+                            className="w-full flex items-center justify-center px-6 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium shadow-md"
                         >
                             <IconPlus className="h-5 w-5 mr-2" />
                             Tambah Modal Baru
                         </Link>
                     </div>
 
-                    {/* Daftar Modal */}
+                    {/* Capital List */}
                     <div className="lg:col-span-2">
-                        <div className="bg-white rounded-lg shadow">
-                            <div className="p-6 border-b border-gray-200">
+                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700">
+                            <div className="px-8 py-6 border-b border-gray-200 dark:border-gray-700">
                                 <div className="flex items-center justify-between">
-                                    <div className="flex items-center">
-                                        <IconCurrencyDollar className="h-5 w-5 mr-2 text-green-500" />
-                                        <h2 className="text-lg font-semibold">Daftar Modal</h2>
+                                    <div className="flex items-center gap-3">
+                                        <IconCurrencyDollar className="h-6 w-6 text-green-600 dark:text-green-400" />
+                                        <h2 className="text-xl font-bold text-gray-900 dark:text-white">Daftar Modal</h2>
                                     </div>
-                                    <span className="bg-gray-100 text-gray-800 text-sm px-3 py-1 rounded-full">
+                                    <span className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 text-sm px-4 py-2 rounded-full font-semibold">
                                         {capitalData.length} catatan
                                         {pagination && ` dari ${pagination.total}`}
                                     </span>

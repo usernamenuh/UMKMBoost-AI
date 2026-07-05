@@ -41,8 +41,8 @@ export function Landing() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="secondary">Log in</NavbarButton>
-            <NavbarButton className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl">Register</NavbarButton>
+            <NavbarButton href={login.url()} variant="secondary">Log in</NavbarButton>
+            <NavbarButton href={register.url()} className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl">Register</NavbarButton>
           </div>
         </NavBody>
 
@@ -63,10 +63,8 @@ export function Landing() {
               </a>
             ))}
             <div className="flex w-full flex-col gap-4">
-               <NavbarButton variant="secondary">
-              <Link href={login()}>Log in</Link>
-            </NavbarButton>
-            <NavbarButton className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl"><Link href={register()}>Register</Link></NavbarButton>
+              <NavbarButton href={login.url()} variant="secondary">Log in</NavbarButton>
+              <NavbarButton href={register.url()} className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl">Register</NavbarButton>
             </div>
           </MobileNavMenu>
         </MobileNav>

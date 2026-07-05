@@ -110,53 +110,49 @@ export default function ExpenseIndex({ business, expenses, total, filters: initi
         <AppLayout>
             <Head title="Pengeluaran" />
             
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="flex flex-col h-full gap-8 p-8">
                 {/* Header */}
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-                    <div className="flex items-center space-x-4">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+                    <div>
                         <Link
                             href={`/business/${business.id}`}
-                            className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300"
+                            className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300 mb-4"
                         >
                             <IconArrowLeft className="h-4 w-4 mr-1" />
                             Kembali
                         </Link>
-                        <div>
-                            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                                Pengeluaran - {business.name}
-                            </h1>
-                            <p className="text-gray-600 dark:text-gray-400 mt-2">
-                                Total pengeluaran: {formatCurrency(total)}
-                            </p>
-                        </div>
+                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                            Pengeluaran - {business.name}
+                        </h1>
+                        <p className="text-base text-gray-600 dark:text-gray-400">
+                            Total pengeluaran: <span className="font-semibold text-gray-900 dark:text-white">{formatCurrency(total)}</span>
+                        </p>
                     </div>
-                    <div className="flex space-x-2">
-                        <Link 
-                            href={`/business/${business.id}/expense/create`}
-                            className="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                        >
-                            <IconPlus className="h-5 w-5 mr-2" />
-                            Tambah Pengeluaran
-                        </Link>
-                    </div>
+                    <Link 
+                        href={`/business/${business.id}/expense/create`}
+                        className="inline-flex items-center px-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-base"
+                    >
+                        <IconPlus className="h-5 w-5 mr-2" />
+                        Tambah Pengeluaran
+                    </Link>
                 </div>
 
-                {/* Filter */}
-                <div className="mb-6 bg-white dark:bg-gray-800 shadow rounded-lg p-4">
-                    <div className="flex items-center mb-3">
-                        <IconFilter className="h-5 w-5 mr-2 text-gray-500" />
-                        <h3 className="text-lg font-medium text-gray-900 dark:text-white">Filter</h3>
+                {/* Filter Card */}
+                <div className="bg-white dark:bg-gray-800 shadow-md border border-gray-200 dark:border-gray-700 rounded-xl p-8">
+                    <div className="flex items-center gap-3 mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+                        <IconFilter className="h-6 w-6 text-gray-600 dark:text-gray-400" />
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white">Filter</h3>
                     </div>
-                    <form onSubmit={handleFilter} className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <form onSubmit={handleFilter} className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                         {/* Category Filter */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                                 Kategori
                             </label>
                             <select
                                 value={data.category_id}
                                 onChange={(e) => setData('category_id', e.target.value)}
-                                className="block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                className="block w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-5 py-3 text-base text-gray-900 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition"
                             >
                                 <option value="">Semua Kategori</option>
                                 {business.expense_categories.map((category) => (
@@ -169,44 +165,44 @@ export default function ExpenseIndex({ business, expenses, total, filters: initi
 
                         {/* Start Date */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                                 Dari Tanggal
                             </label>
                             <input
                                 type="date"
                                 value={data.start_date}
                                 onChange={(e) => setData('start_date', e.target.value)}
-                                className="block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                className="block w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-5 py-3 text-base text-gray-900 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition"
                             />
                         </div>
 
                         {/* End Date */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                                 Sampai Tanggal
                             </label>
                             <input
                                 type="date"
                                 value={data.end_date}
                                 onChange={(e) => setData('end_date', e.target.value)}
-                                className="block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                className="block w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-5 py-3 text-base text-gray-900 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition"
                             />
                         </div>
 
                         {/* Action Buttons */}
-                        <div className="flex items-end space-x-2">
+                        <div className="flex items-end gap-3">
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+                                className="flex-1 inline-flex items-center justify-center px-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition font-medium text-base disabled:opacity-50"
                             >
-                                <IconSearch className="h-4 w-4 mr-2" />
+                                <IconSearch className="h-5 w-5 mr-2" />
                                 Filter
                             </button>
                             <button
                                 type="button"
                                 onClick={clearFilters}
-                                className="inline-flex items-center px-4 py-2 bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                                className="flex-1 inline-flex items-center justify-center px-5 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition font-medium text-base"
                             >
                                 Reset
                             </button>
@@ -215,7 +211,7 @@ export default function ExpenseIndex({ business, expenses, total, filters: initi
                 </div>
 
                 {/* Expense List */}
-                <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
+                <div className="bg-white dark:bg-gray-800 shadow-md border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
                     {expensesArray.length === 0 ? (
                         <div className="text-center py-12">
                             <IconReceipt className="mx-auto h-12 w-12 text-gray-400" />

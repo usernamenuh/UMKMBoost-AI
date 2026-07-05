@@ -11,17 +11,27 @@ interface Business {
     type: string;
 }
 
-interface Props {
-    business: Business;
+interface Revenue {
+    id: number;
+    description: string;
+    amount: number;
+    revenue_date: string;
+    category: string;
+    notes: string;
 }
 
-export default function CreateRevenue({ business }: Props) {
-    const { data, setData, post, processing, errors } = useForm({
-        description: '',
-        amount: '',
-        revenue_date: new Date().toISOString().split('T')[0],
-        category: 'Penjualan',
-        notes: '',
+interface Props {
+    business: Business;
+    revenue: Revenue;
+}
+
+export default function EditRevenue({ business, revenue }: Props) {
+    const { data, setData, put, processing, errors } = useForm({
+        description: revenue.description || '',
+        amount: revenue.amount || '',
+        revenue_date: revenue.revenue_date || new Date().toISOString().split('T')[0],
+        category: revenue.category || 'Penjualan',
+        notes: revenue.notes || '',
     });
 
     const breadcrumbs: BreadcrumbItem[] = [
@@ -29,12 +39,12 @@ export default function CreateRevenue({ business }: Props) {
         { title: 'Bisnis', href: '/business' },
         { title: business.name, href: `/business/${business.id}` },
         { title: 'Pendapatan', href: `/business/${business.id}/revenues` },
-        { title: 'Tambah Pendapatan', href: '#' },
+        { title: 'Edit Pendapatan', href: '#' },
     ];
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(`/business/${business.id}/revenues`);
+        put(`/business/${business.id}/revenues/${revenue.id}`);
     };
 
     const categories = [
@@ -47,15 +57,15 @@ export default function CreateRevenue({ business }: Props) {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title={`Tambah Pendapatan - ${business.name}`} />
+            <Head title={`Edit Pendapatan - ${business.name}`} />
             
             <div className="flex h-full flex-1 flex-col gap-8 p-8">
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900">Tambah Pendapatan</h1>
+                        <h1 className="text-3xl font-bold text-gray-900">Edit Pendapatan</h1>
                         <p className="text-base text-gray-600 mt-2">
-                            Catat pendapatan baru untuk <span className="font-semibold text-gray-900">{business.name}</span>
+                            Perbarui pendapatan untuk <span className="font-semibold text-gray-900">{business.name}</span>
                         </p>
                     </div>
                     <Link
@@ -74,13 +84,13 @@ export default function CreateRevenue({ business }: Props) {
                             <IconCoin className="h-7 w-7 text-green-600" />
                         </div>
                         <div>
-                            <h2 className="text-xl font-bold text-gray-900">Form Pendapatan</h2>
-                            <p className="text-sm text-gray-600 mt-1">Isi detail pendapatan yang diterima</p>
+                            <h2 className="text-xl font-bold text-gray-900">Edit Pendapatan</h2>
+                            <p className="text-sm text-gray-600 mt-1">Perbarui detail pendapatan yang diterima</p>
                         </div>
                     </div>
 
                     <form onSubmit={submit} className="space-y-7">
-                        {/* Deskripsi - Full Width */}
+                        {/* Deskripsi */}
                         <div>
                             <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-3">
                                 Deskripsi Pendapatan <span className="text-red-500">*</span>
@@ -194,32 +204,10 @@ export default function CreateRevenue({ business }: Props) {
                                 className="flex items-center gap-2 px-7 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium text-base"
                             >
                                 <IconDeviceFloppy className="h-5 w-5" />
-                                {processing ? 'Menyimpan...' : 'Simpan Pendapatan'}
+                                {processing ? 'Menyimpan...' : 'Simpan Perubahan'}
                             </button>
                         </div>
                     </form>
-                </div>
-
-                {/* Info Card */}
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
-                    <div className="flex gap-4">
-                        <div className="flex-shrink-0">
-                            <svg className="h-6 w-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                            </svg>
-                        </div>
-                        <div className="flex-1">
-                            <h3 className="text-sm font-semibold text-blue-900">Tips Mencatat Pendapatan</h3>
-                            <div className="mt-3 text-sm text-blue-800">
-                                <ul className="list-disc list-inside space-y-2">
-                                    <li>Catat pendapatan segera setelah transaksi terjadi</li>
-                                    <li>Pastikan jumlah yang dicatat akurat dan sesuai bukti</li>
-                                    <li>Gunakan kategori yang konsisten untuk memudahkan analisis</li>
-                                    <li>Tambahkan catatan untuk transaksi yang perlu penjelasan khusus</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </AppLayout>

@@ -30,6 +30,10 @@ class BusinessController extends Controller
             ->latest()
             ->get()
             ->map(function ($business) {
+                // Compute totals directly to avoid inconsistencies between accessor names
+                $totalRevenue = (float) $business->revenues()->sum('amount');
+                $totalExpenses = (float) $business->expenses()->sum('amount');
+
                 return [
                     'id' => $business->id,
                     'name' => $business->name,
@@ -37,9 +41,10 @@ class BusinessController extends Controller
                     'description' => $business->description,
                     'is_active' => $business->is_active,
                     'initial_investment' => $business->initial_investment,
-                    'total_revenue' => $business->total_revenue,
-                    'total_expense' => $business->total_expense,
-                    'net_profit' => $business->net_profit,
+                    'total_revenue' => $totalRevenue,
+                    // keep legacy key expected by frontend
+                    'total_expense' => $totalExpenses,
+                    'net_profit' => $totalRevenue - $totalExpenses,
                 ];
             });
 

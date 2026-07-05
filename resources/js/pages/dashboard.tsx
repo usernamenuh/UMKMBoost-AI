@@ -522,6 +522,12 @@ export default function Dashboard({
                                                     >
                                                         Pendapatan
                                                     </Link>
+                                                    <Link
+                                                        href={`/business/${business.id}/revenues/create`}
+                                                        className="text-xs px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                                                    >
+                                                        Tambah Pendapatan
+                                                    </Link>
                                                 </div>
                                             </td>
                                         </tr>

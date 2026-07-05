@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Business;
 use App\Models\Expense;
 use App\Models\Revenue;
+use App\Models\CapitalRecord;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Carbon\Carbon;
@@ -14,6 +15,7 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
+        /** @var \App\Models\User|null $user */
         
         // Ambil ID bisnis user terlebih dahulu
         $businessIds = $user->businesses->pluck('id')->toArray();
@@ -25,16 +27,19 @@ class DashboardController extends Controller
             ->withSum('revenues', 'amount')
             ->get()
             ->map(function ($business) {
-                $totalRevenue = $business->revenues_sum_amount ?? 0;
-                $totalExpenses = $business->expenses_sum_amount ?? 0;
+                // Defensive: compute sums directly to avoid any withSum/aliasing edge-cases
+                $totalRevenue = (float) Revenue::where('business_id', $business->id)->sum('amount');
+                $totalExpenses = (float) Expense::where('business_id', $business->id)->sum('amount');
+                $totalCapital = (float) CapitalRecord::where('business_id', $business->id)->sum('amount');
+
                 $netProfit = $totalRevenue - $totalExpenses;
-                
+
                 return [
                     'id' => $business->id,
                     'name' => $business->name,
                     'type' => $business->type ?? 'Tidak ada',
                     'description' => $business->description,
-                    'total_capital' => $business->capital_records_sum_amount ?? 0,
+                    'total_capital' => $totalCapital,
                     'total_expenses' => $totalExpenses,
                     'total_revenue' => $totalRevenue,
                     'net_profit' => $netProfit,

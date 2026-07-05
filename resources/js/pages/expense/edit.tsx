@@ -32,11 +32,21 @@ interface ExpenseEditProps {
 }
 
 const formatCurrencyInput = (value: string) => {
-    const digits = value.replace(/\D/g, '');
+    if (!value) return '';
 
-    if (!digits) {
-        return '';
+    const v = value.trim();
+
+    // If value looks like a decimal with two fraction digits (Eloquent cast "50000.00"),
+    // parse it as a number directly so we don't accidentally strip the decimal point
+    // and turn it into cents (e.g. "50000.00" -> "5000000").
+    if (/^\d+\.\d{2}$/.test(v)) {
+        const n = Number(v);
+        if (Number.isNaN(n)) return '';
+        return new Intl.NumberFormat('id-ID').format(n);
     }
+
+    const digits = v.replace(/\D/g, '');
+    if (!digits) return '';
 
     return new Intl.NumberFormat('id-ID').format(Number(digits));
 };
@@ -58,11 +68,13 @@ const normalizeDate = (value: string) => {
 
 export default function ExpenseEdit({ business, expense }: ExpenseEditProps) {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+    // Ensure we initialize the form amount as the integer base amount (no fractional cents).
+    const initialAmount = expense.amount ? String(Math.round(Number(expense.amount))) : '';
     const [amountDisplay, setAmountDisplay] = useState(formatCurrencyInput(String(expense.amount ?? '')));
 
     const { data, setData, put, processing, errors } = useForm({
         expense_category_id: expense.expense_category_id || '',
-        amount: String(expense.amount ?? ''),
+        amount: initialAmount,
         description: expense.description || '',
         notes: expense.notes || '',
         expense_date: normalizeDate(expense.expense_date || ''),

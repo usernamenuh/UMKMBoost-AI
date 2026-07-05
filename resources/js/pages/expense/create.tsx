@@ -21,11 +21,18 @@ interface ExpenseCreateProps {
 }
 
 const formatCurrencyInput = (value: string) => {
-    const digits = value.replace(/\D/g, '');
+    if (!value) return '';
 
-    if (!digits) {
-        return '';
+    const v = value.trim();
+
+    if (/^\d+\.\d{2}$/.test(v)) {
+        const n = Number(v);
+        if (Number.isNaN(n)) return '';
+        return new Intl.NumberFormat('id-ID').format(n);
     }
+
+    const digits = v.replace(/\D/g, '');
+    if (!digits) return '';
 
     return new Intl.NumberFormat('id-ID').format(Number(digits));
 };

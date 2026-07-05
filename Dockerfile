@@ -1,48 +1,12 @@
-# ==========================
-# Stage 1 - Build Frontend
-# ==========================
-FROM node:22-alpine AS frontend
-
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm install
-
-COPY . .
-
-RUN npm run build
-
-# ==========================
-# Stage 2 - Install Composer
-# ==========================
-FROM composer:2 AS vendor
-
-WORKDIR /app
-
-COPY composer.json composer.lock ./
-
-RUN composer install \
-    --no-dev \
-    --prefer-dist \
-    --optimize-autoloader \
-    --no-interaction \
-    --no-scripts
-
-COPY . .
-
-RUN composer dump-autoload --optimize
-
-# ==========================
-# Stage 3 - Production
-# ==========================
 FROM php:8.2-fpm
 
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
-    nginx \
     git \
-    unzip \
     curl \
+    unzip \
     zip \
+    nginx \
     libzip-dev \
     libpng-dev \
     libjpeg62-turbo-dev \
@@ -50,32 +14,60 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libonig-dev \
     libxml2-dev \
-    sqlite3 \
-    libsqlite3-dev \
     default-mysql-client \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
         pdo \
         pdo_mysql \
         mysqli \
-        gd \
-        intl \
         zip \
-        bcmath \
+        intl \
+        gd \
         exif \
+        bcmath \
         opcache
+
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Install Node.js 22
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs
 
 WORKDIR /var/www/html
 
-COPY --from=vendor /app ./
-COPY --from=frontend /app/public/build ./public/build
+# Copy project
+COPY . .
+
+# Install Composer dependencies
+RUN composer install \
+    --no-dev \
+    --optimize-autoloader \
+    --no-interaction
+
+# Install Node dependencies
+RUN npm install
+
+# Build Vite (PHP sudah tersedia di tahap ini)
+RUN npm run build
+
+# Laravel optimization
+RUN php artisan config:clear \
+ && php artisan route:clear \
+ && php artisan view:clear
+
+# Permission
+RUN mkdir -p storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/logs \
+ && chown -R www-data:www-data storage bootstrap/cache \
+ && chmod -R 775 storage bootstrap/cache
 
 COPY nginx.conf /etc/nginx/sites-enabled/default
 COPY start.sh /start.sh
 
 RUN chmod +x /start.sh
-
-RUN chown -R www-data:www-data storage bootstrap/cache
 
 EXPOSE 8080
 

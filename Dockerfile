@@ -40,10 +40,7 @@ WORKDIR /var/www/html
 COPY . .
 
 # Install Composer dependencies
-RUN composer install \
-    --no-dev \
-    --optimize-autoloader \
-    --no-interaction
+RUN composer install --optimize-autoloader --no-interaction
 
 # Install Node dependencies
 RUN npm install
